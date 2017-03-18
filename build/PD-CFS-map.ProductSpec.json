@@ -1,0 +1,184 @@
+var ps_cfs_nodes = [
+  {
+    "source": "{AD184A9B-1665-4c97-A7CA-1186F63EFF8B}",
+    "sourcename": "Integrated Messaging and Presence",
+    "target": "{1C859EF8-A781-4a2b-8EFC-356755FE3110}",
+    "targetname": "Instant Messaging",
+    "value": 1
+  },
+  {
+    "source": "{68F44EB2-F23A-4bc9-A9D8-94EFCCF90D47}",
+    "sourcename": "SMS Broadcast",
+    "target": "{76460DE4-5689-4f72-B722-C897B3B077E0}",
+    "targetname": "SMS",
+    "value": 1
+  },
+  {
+    "source": "{5FCD3922-76CF-44b7-BD22-A3934DC475DC}",
+    "sourcename": "SMS Gateway",
+    "target": "{76460DE4-5689-4f72-B722-C897B3B077E0}",
+    "targetname": "SMS",
+    "value": 1
+  },
+  {
+    "source": "{15379DA2-6072-4fe0-96E5-FE7C55AB8B0A}",
+    "sourcename": "UC Base Product",
+    "target": "{C2954BD7-6D63-475f-8412-5F47DE253164}",
+    "targetname": "Directory Service",
+    "value": 1
+  },
+  {
+    "source": "{15379DA2-6072-4fe0-96E5-FE7C55AB8B0A}",
+    "sourcename": "UC Base Product",
+    "target": "{D140E603-2292-460c-A3AD-28C618B3CA2A}",
+    "targetname": "Presence",
+    "value": 1
+  },
+  {
+    "source": "{15379DA2-6072-4fe0-96E5-FE7C55AB8B0A}",
+    "sourcename": "UC Base Product",
+    "target": "{436F66D2-17F7-4b79-8FDC-5F27323299DC}",
+    "targetname": "Sharing",
+    "value": 1
+  },
+  {
+    "source": "{15379DA2-6072-4fe0-96E5-FE7C55AB8B0A}",
+    "sourcename": "UC Base Product",
+    "target": "{1C859EF8-A781-4a2b-8EFC-356755FE3110}",
+    "targetname": "Instant Messaging",
+    "value": 1
+  },
+  {
+    "source": "{15379DA2-6072-4fe0-96E5-FE7C55AB8B0A}",
+    "sourcename": "UC Base Product",
+    "target": "{C104EA20-0BBB-4247-9367-3B75C6A13766}",
+    "targetname": "IP Telephony",
+    "value": 1
+  },
+  {
+    "source": "{AD9C1864-4206-4929-8193-03EF874F8BBE}",
+    "sourcename": "UC Fixed Collaboration User",
+    "target": "{D89F8DCE-9B42-42c5-B17F-3A9933CAEF41}",
+    "targetname": "Media Conferencing",
+    "value": 1
+  },
+  {
+    "source": "{AD9C1864-4206-4929-8193-03EF874F8BBE}",
+    "sourcename": "UC Fixed Collaboration User",
+    "target": "{C2954BD7-6D63-475f-8412-5F47DE253164}",
+    "targetname": "Directory Service",
+    "value": 1
+  },
+  {
+    "source": "{AD9C1864-4206-4929-8193-03EF874F8BBE}",
+    "sourcename": "UC Fixed Collaboration User",
+    "target": "{C104EA20-0BBB-4247-9367-3B75C6A13766}",
+    "targetname": "IP Telephony",
+    "value": 1
+  },
+  {
+    "source": "{AD9C1864-4206-4929-8193-03EF874F8BBE}",
+    "sourcename": "UC Fixed Collaboration User",
+    "target": "{1C859EF8-A781-4a2b-8EFC-356755FE3110}",
+    "targetname": "Instant Messaging",
+    "value": 1
+  },
+  {
+    "source": "{AD9C1864-4206-4929-8193-03EF874F8BBE}",
+    "sourcename": "UC Fixed Collaboration User",
+    "target": "{D140E603-2292-460c-A3AD-28C618B3CA2A}",
+    "targetname": "Presence",
+    "value": 1
+  },
+  {
+    "source": "{AD9C1864-4206-4929-8193-03EF874F8BBE}",
+    "sourcename": "UC Fixed Collaboration User",
+    "target": "{436F66D2-17F7-4b79-8FDC-5F27323299DC}",
+    "targetname": "Sharing",
+    "value": 1
+  },
+  {
+    "source": "{41F1F311-22F5-4f7d-9EBF-174D6D402C35}",
+    "sourcename": "Call Center Agent Basic",
+    "target": "{18FEEFFD-08E9-4524-BB77-120A9E849B4A}",
+    "targetname": "Call Center",
+    "value": 1
+  },
+  {
+    "source": "{1D1B957C-0B98-408c-82E3-893FB5BD6673}",
+    "sourcename": "Call Center Premium",
+    "target": "{18FEEFFD-08E9-4524-BB77-120A9E849B4A}",
+    "targetname": "Call Center",
+    "value": 1
+  },
+  {
+    "source": "{0AB2B2A7-9082-4ec5-BF16-0980A58D2B20}",
+    "sourcename": "Call Center Supervisor",
+    "target": "{18FEEFFD-08E9-4524-BB77-120A9E849B4A}",
+    "targetname": "Call Center",
+    "value": 1
+  },
+  {
+    "source": "{FE530926-53CC-4ca3-B7B4-3B89E85B62A1}",
+    "sourcename": "Unlimited Calling",
+    "target": "{C104EA20-0BBB-4247-9367-3B75C6A13766}",
+    "targetname": "IP Telephony",
+    "value": 1
+  },
+  {
+    "source": "{0C4D0630-44CF-43a4-BB7B-0821370453CB}",
+    "sourcename": "Audio Conferencing",
+    "target": "{D89F8DCE-9B42-42c5-B17F-3A9933CAEF41}",
+    "targetname": "Media Conferencing",
+    "value": 1
+  },
+  {
+    "source": "{1DF5A081-503D-455a-9008-AC5337CADCCC}",
+    "sourcename": "Converged Collaboration User",
+    "target": "{1C859EF8-A781-4a2b-8EFC-356755FE3110}",
+    "targetname": "Instant Messaging",
+    "value": 1
+  },
+  {
+    "source": "{1DF5A081-503D-455a-9008-AC5337CADCCC}",
+    "sourcename": "Converged Collaboration User",
+    "target": "{C2954BD7-6D63-475f-8412-5F47DE253164}",
+    "targetname": "Directory Service",
+    "value": 1
+  },
+  {
+    "source": "{1DF5A081-503D-455a-9008-AC5337CADCCC}",
+    "sourcename": "Converged Collaboration User",
+    "target": "{6409CF6F-9D56-458d-92EB-EC1A2FA1E3AE}",
+    "targetname": "VoiceMail",
+    "value": 1
+  },
+  {
+    "source": "{1DF5A081-503D-455a-9008-AC5337CADCCC}",
+    "sourcename": "Converged Collaboration User",
+    "target": "{D140E603-2292-460c-A3AD-28C618B3CA2A}",
+    "targetname": "Presence",
+    "value": 1
+  },
+  {
+    "source": "{1DF5A081-503D-455a-9008-AC5337CADCCC}",
+    "sourcename": "Converged Collaboration User",
+    "target": "{436F66D2-17F7-4b79-8FDC-5F27323299DC}",
+    "targetname": "Sharing",
+    "value": 1
+  },
+  {
+    "source": "{1DF5A081-503D-455a-9008-AC5337CADCCC}",
+    "sourcename": "Converged Collaboration User",
+    "target": "{C104EA20-0BBB-4247-9367-3B75C6A13766}",
+    "targetname": "IP Telephony",
+    "value": 1
+  },
+  {
+    "source": "{1DF5A081-503D-455a-9008-AC5337CADCCC}",
+    "sourcename": "Converged Collaboration User",
+    "target": "{D89F8DCE-9B42-42c5-B17F-3A9933CAEF41}",
+    "targetname": "Media Conferencing",
+    "value": 1
+  }
+]

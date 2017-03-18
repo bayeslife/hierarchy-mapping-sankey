@@ -1,0 +1,122 @@
+var cfsNodes=[
+  {
+    "type": "Customer Facing Service Catalogue",
+    "id": "{CA66B085-4A11-486e-B043-2525BAC3F00C}",
+    "name": "Enteprise Service Catalogue",
+    "description": "",
+    "min": 2,
+    "parent": "null"
+  },
+  {
+    "type": "Customer Facing Service Specification Type",
+    "id": "{31554536-D13F-429c-A5FA-C008E36FDD5F}",
+    "name": "Connectivity",
+    "description": "",
+    "min": 3,
+    "parent": "{CA66B085-4A11-486e-B043-2525BAC3F00C}"
+  },
+  {
+    "type": "Customer Facing Service Specification Type",
+    "id": "{68E0CD64-A8CA-413e-B3F6-234259B7D608}",
+    "name": "Fixed Telephony",
+    "description": "",
+    "min": 3,
+    "parent": "{CA66B085-4A11-486e-B043-2525BAC3F00C}"
+  },
+  {
+    "type": "Customer Facing Service Specification Type",
+    "id": "{CEC719D0-5248-4af2-B23F-1F04D4E481ED}",
+    "name": "UC Service Catalogue",
+    "description": "",
+    "min": 3,
+    "parent": "{CA66B085-4A11-486e-B043-2525BAC3F00C}"
+  },
+  {
+    "type": "Customer Facing Service Specification",
+    "id": "{D89F8DCE-9B42-42c5-B17F-3A9933CAEF41}",
+    "name": "Media Conferencing",
+    "description": "Connecting multiple parties in a voice and video conversation.",
+    "min": 4,
+    "parent": "{CEC719D0-5248-4af2-B23F-1F04D4E481ED}"
+  },
+  {
+    "type": "Customer Facing Service Specification",
+    "id": "{436F66D2-17F7-4b79-8FDC-5F27323299DC}",
+    "name": "Sharing",
+    "description": "A service that allows remote access and remote collaboration on a parties device.",
+    "min": 4,
+    "parent": "{CEC719D0-5248-4af2-B23F-1F04D4E481ED}"
+  },
+  {
+    "type": "Customer Facing Service Specification",
+    "id": "{C2954BD7-6D63-475f-8412-5F47DE253164}",
+    "name": "Directory Service",
+    "description": "A service which lets a person locate another party by various indexes.",
+    "min": 4,
+    "parent": "{CEC719D0-5248-4af2-B23F-1F04D4E481ED}"
+  },
+  {
+    "type": "Customer Facing Service Specification",
+    "id": "{6409CF6F-9D56-458d-92EB-EC1A2FA1E3AE}",
+    "name": "VoiceMail",
+    "description": "",
+    "min": 4,
+    "parent": "{CEC719D0-5248-4af2-B23F-1F04D4E481ED}"
+  },
+  {
+    "type": "Customer Facing Service Specification",
+    "id": "{76460DE4-5689-4f72-B722-C897B3B077E0}",
+    "name": "SMS",
+    "description": "",
+    "min": 4,
+    "parent": "{CEC719D0-5248-4af2-B23F-1F04D4E481ED}"
+  },
+  {
+    "type": "Customer Facing Service Specification",
+    "id": "{1C859EF8-A781-4a2b-8EFC-356755FE3110}",
+    "name": "Instant Messaging",
+    "description": "A service which can be used to send short messages in real time between multiple parties",
+    "min": 4,
+    "parent": "{CEC719D0-5248-4af2-B23F-1F04D4E481ED}"
+  },
+  {
+    "type": "Customer Facing Service Specification",
+    "id": "{D140E603-2292-460c-A3AD-28C618B3CA2A}",
+    "name": "Presence",
+    "description": " A service that provides a status indicator that conveys ability and willingness of a potential communication partner.",
+    "min": 4,
+    "parent": "{CEC719D0-5248-4af2-B23F-1F04D4E481ED}"
+  },
+  {
+    "type": "Customer Facing Service Specification",
+    "id": "{02D6EAA1-3138-43b0-9F7A-887709221C83}",
+    "name": "Email",
+    "description": "",
+    "min": 4,
+    "parent": "{CEC719D0-5248-4af2-B23F-1F04D4E481ED}"
+  },
+  {
+    "type": "Customer Facing Service Specification",
+    "id": "{C104EA20-0BBB-4247-9367-3B75C6A13766}",
+    "name": "IP Telephony",
+    "description": "Connecting multiple parties in a voice conversation.",
+    "min": 4,
+    "parent": "{CEC719D0-5248-4af2-B23F-1F04D4E481ED}"
+  },
+  {
+    "type": "Customer Facing Service Specification",
+    "id": "{18FEEFFD-08E9-4524-BB77-120A9E849B4A}",
+    "name": "Call Center",
+    "description": "A simplified capability to provide traditional PABX services.",
+    "min": 4,
+    "parent": "{CEC719D0-5248-4af2-B23F-1F04D4E481ED}"
+  },
+  {
+    "type": "Customer Facing Service Specification Type",
+    "id": "{38169920-DF55-4c3d-8F33-18F47BA58F28}",
+    "name": "Mobile Telephony",
+    "description": "",
+    "min": 3,
+    "parent": "{CA66B085-4A11-486e-B043-2525BAC3F00C}"
+  }
+]

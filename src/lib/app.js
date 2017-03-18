@@ -1,8 +1,13 @@
 'use strict';
 
 var exampleNodes = cfsNodes.concat(rfsNodes);
+exampleNodes = exampleNodes.concat(psNodes);
+
+
+var exampleLinks = ps_cfs_nodes.concat(cfs_rfs_nodes);
 
 var svg, tooltip, biHiSankey, path, defs, colorScale, highlightColorScale, isTransitioning;
+
 
 var OPACITY = {
     NODE_DEFAULT: 0.9,
@@ -12,9 +17,9 @@ var OPACITY = {
     LINK_FADED: 0.05,
     LINK_HIGHLIGHT: 0.9
   },
-  TYPES =       ["ServiceSpecificationType", "Resource Facing Service Specification", "Customer Facing Service Specification","ResourceServiceSpecificationType"],
-  TYPE_COLORS = ["#1b9e77",                 "#1b9e77",     "#7570b3",     "#7570b3",    "#66a61e",    "#e6ab02", "#e6ab02",      "#a6761d"],
-  TYPE_HIGHLIGHT_COLORS = ["#66c2a5", "#fc8d62", "#8da0cb", "#e78ac3", "#a6d854", "#ffd92f", "#e5c494"],
+  TYPES =       ["ProductCatalogue","ProductSpec","CustomerFacingServiceCatalogue","CustomerFacingServiceSpecificationType", "CustomerFacingServiceSpecification", "ResourceFacingServiceCatalogue", "ResourceFacingServiceSpecification","ResourceFacingServiceSpecificationType"],
+  TYPE_COLORS = ["#0000FF",          "#0000FF",   "#00FF00",                          "#00FF00",                  "#00FF00",                              "#FF0000",                            "#FF0000",                              "#FF0000"],
+  TYPE_HIGHLIGHT_COLORS = ["#0000AA", "#0000AA",  "#00AA00",                          "#00AA00",                  "#00AA00",                              "#AA0000",                             "#AA0000"],
   LINK_COLOR = "#b3b3b3",
   INFLOW_COLOR = "#2E86D1",
   OUTFLOW_COLOR = "#D63028",
@@ -35,6 +40,8 @@ var OPACITY = {
   WIDTH = 1200 - MARGIN.LEFT - MARGIN.RIGHT,
   LAYOUT_INTERATIONS = 20,
   REFRESH_INTERVAL = 7000;
+
+
 
 var formatNumber = function (d) {
   var numberFormat = d3.format(",.0f"); // zero decimal places
@@ -69,8 +76,11 @@ showTooltip = function () {
       .style("opacity", 1);
 };
 
-colorScale = d3.scale.ordinal().domain(TYPES).range(TYPE_COLORS),
-highlightColorScale = d3.scale.ordinal().domain(TYPES).range(TYPE_HIGHLIGHT_COLORS),
+colorScale = d3.scale.ordinal().domain(TYPES).range(TYPE_COLORS);
+
+highlightColorScale = d3.scale.ordinal().domain(TYPES).range(TYPE_HIGHLIGHT_COLORS);
+
+
 
 svg = d3.select("#chart").append("svg")
         .attr("width", WIDTH + MARGIN.LEFT + MARGIN.RIGHT)
@@ -188,11 +198,12 @@ function update () {
     node
       .selectAll("rect")
         .style("fill", function (d) {
-          d.color = colorScale(d.type.replace(/ .*/, ""));
+          var t = d.type.replace(/ /g, "")
+          d.color = colorScale(t);
           return d.color;
         })
         .style("stroke", function (d) {
-          return d3.rgb(colorScale(d.type.replace(/ .*/, ""))).darker(0.1);
+          return d3.rgb(colorScale(d.type.replace(/ /g, ""))).darker(0.1);
         })
         .style("fill-opacity", OPACITY.NODE_DEFAULT);
 
@@ -318,10 +329,10 @@ function update () {
     .style("opacity", OPACITY.NODE_DEFAULT)
     .select("rect")
       .style("fill", function (d) {
-        d.color = colorScale(d.type.replace(/ .*/, ""));
+        d.color = colorScale(d.type.replace(/ /g, ""));
         return d.color;
       })
-      .style("stroke", function (d) { return d3.rgb(colorScale(d.type.replace(/ .*/, ""))).darker(0.1); })
+      .style("stroke", function (d) { return d3.rgb(colorScale(d.type.replace(/ /g, ""))).darker(0.1); })
       .style("stroke-WIDTH", "1px")
       .attr("height", function (d) { return d.height; })
       .attr("width", biHiSankey.nodeWidth());
@@ -359,11 +370,13 @@ function update () {
   nodeEnter.append("text");
   nodeEnter.append("rect")
     .style("fill", function (d) {
-      d.color = colorScale(d.type.replace(/ .*/, ""));
+      var t = d.type.replace(/ /g, "");
+      d.color = colorScale(t);
+       console.log(t + " " + d.color);
       return d.color;
     })
     .style("stroke", function (d) {
-      return d3.rgb(colorScale(d.type.replace(/ .*/, ""))).darker(0.1);
+      return d3.rgb(colorScale(d.type.replace(/ /g, ""))).darker(0.1);
     })
     .style("stroke-WIDTH", "1px")
     .attr("height", function (d) { return d.height; })
@@ -401,9 +414,9 @@ function update () {
           .duration(TRANSITION_DURATION)
           .style("opacity", 1).select(".value")
           .text(function () {
-            var additionalInstructions = g.children.length ? "\n(Double click to expand)" : "";
+            var additionalInstructions = g.children.length ? "\n\n(Double click to expand)" : "";
             //return g.name + "\nNet flow: " + g.netFlow + additionalInstructions;
-            return g.name + ":" + g.type + "\n(Double click to expand)";
+            return g.name + ":" + g.type +"\n\n"+ g.description + "\n\n(Double click to expand)";
           });
     }
   });
@@ -447,7 +460,7 @@ function update () {
   collapserEnter.append("circle")
     .attr("r", COLLAPSER.RADIUS)
     .style("fill", function (d) {
-      d.color = colorScale(d.type.replace(/ .*/, ""));
+      d.color = colorScale(d.type.replace(/ /g, ""));
       return d.color;
     });
 
@@ -480,7 +493,7 @@ function update () {
           return g.name + "\n"+ g.type+"\n(Double click to collapse)";
         });
 
-      var highlightColor = highlightColorScale(g.type.replace(/ .*/, ""));
+      var highlightColor = highlightColorScale(g.type.replace(/ /g, ""));
 
       d3.select(this)
         .style("opacity", OPACITY.NODE_HIGHLIGHT)

@@ -1,5 +1,4 @@
-
-var exampleLinks =[
+var cfs_rfs_nodes =[
   {
     "source": "{1C859EF8-A781-4a2b-8EFC-356755FE3110}",
     "sourcename": "Instant Messaging",
@@ -451,50 +450,8 @@ var exampleLinks =[
   {
     "source": "{18FEEFFD-08E9-4524-BB77-120A9E849B4A}",
     "sourcename": "Call Center",
-    "target": "{78E4CA57-B057-469c-86C1-23BAFF803043}",
-    "targetname": "Callback Place in Queue",
-    "value": 1
-  },
-  {
-    "source": "{18FEEFFD-08E9-4524-BB77-120A9E849B4A}",
-    "sourcename": "Call Center",
-    "target": "{E0068A53-AB7E-4522-85E0-749801AD5B83}",
-    "targetname": "Call Park",
-    "value": 1
-  },
-  {
-    "source": "{18FEEFFD-08E9-4524-BB77-120A9E849B4A}",
-    "sourcename": "Call Center",
-    "target": "{6704B503-A973-4af0-A694-766D0D8C0568}",
-    "targetname": "Call Recording",
-    "value": 1
-  },
-  {
-    "source": "{18FEEFFD-08E9-4524-BB77-120A9E849B4A}",
-    "sourcename": "Call Center",
-    "target": "{36863494-5C77-404a-81AF-9C16AF27850A}",
-    "targetname": "Skills Based Call Routing",
-    "value": 1
-  },
-  {
-    "source": "{18FEEFFD-08E9-4524-BB77-120A9E849B4A}",
-    "sourcename": "Call Center",
-    "target": "{F18364E2-5BFD-498e-B326-ECA7CDC981E6}",
-    "targetname": "Self Service User Management Service",
-    "value": 1
-  },
-  {
-    "source": "{18FEEFFD-08E9-4524-BB77-120A9E849B4A}",
-    "sourcename": "Call Center",
     "target": "{73983C09-89A7-4608-88B6-474DA2903231}",
     "targetname": "AutoAttendant",
-    "value": 1
-  },
-  {
-    "source": "{18FEEFFD-08E9-4524-BB77-120A9E849B4A}",
-    "sourcename": "Call Center",
-    "target": "{10316388-B89A-48f3-B6EE-0922DAA2CDF8}",
-    "targetname": "Inbound Call Queuing",
     "value": 1
   },
   {
@@ -507,8 +464,22 @@ var exampleLinks =[
   {
     "source": "{18FEEFFD-08E9-4524-BB77-120A9E849B4A}",
     "sourcename": "Call Center",
-    "target": "{F8F4CA01-CC98-41a5-9C4B-357BDACEA258}",
-    "targetname": "Call Center Monitoring",
+    "target": "{78E4CA57-B057-469c-86C1-23BAFF803043}",
+    "targetname": "Callback Place in Queue",
+    "value": 1
+  },
+  {
+    "source": "{18FEEFFD-08E9-4524-BB77-120A9E849B4A}",
+    "sourcename": "Call Center",
+    "target": "{BDB4C4BA-BD78-462e-AD54-CBE2FD189B28}",
+    "targetname": "Call Pickup",
+    "value": 1
+  },
+  {
+    "source": "{18FEEFFD-08E9-4524-BB77-120A9E849B4A}",
+    "sourcename": "Call Center",
+    "target": "{6704B503-A973-4af0-A694-766D0D8C0568}",
+    "targetname": "Call Recording",
     "value": 1
   },
   {
@@ -521,8 +492,78 @@ var exampleLinks =[
   {
     "source": "{18FEEFFD-08E9-4524-BB77-120A9E849B4A}",
     "sourcename": "Call Center",
-    "target": "{BDB4C4BA-BD78-462e-AD54-CBE2FD189B28}",
-    "targetname": "Call Pickup",
+    "target": "{F8F4CA01-CC98-41a5-9C4B-357BDACEA258}",
+    "targetname": "Call Center Monitoring",
+    "value": 1
+  },
+  {
+    "source": "{18FEEFFD-08E9-4524-BB77-120A9E849B4A}",
+    "sourcename": "Call Center",
+    "target": "{10316388-B89A-48f3-B6EE-0922DAA2CDF8}",
+    "targetname": "Inbound Call Queuing",
+    "value": 1
+  },
+  {
+    "source": "{18FEEFFD-08E9-4524-BB77-120A9E849B4A}",
+    "sourcename": "Call Center",
+    "target": "{36863494-5C77-404a-81AF-9C16AF27850A}",
+    "targetname": "Skills Based Call Routing",
+    "value": 1
+  },
+  {
+    "source": "{18FEEFFD-08E9-4524-BB77-120A9E849B4A}",
+    "sourcename": "Call Center",
+    "target": "{E0068A53-AB7E-4522-85E0-749801AD5B83}",
+    "targetname": "Call Park",
+    "value": 1
+  },
+  {
+    "source": "{18FEEFFD-08E9-4524-BB77-120A9E849B4A}",
+    "sourcename": "Call Center",
+    "target": "{F18364E2-5BFD-498e-B326-ECA7CDC981E6}",
+    "targetname": "Self Service User Management Service",
+    "value": 1
+  },
+  {
+    "source": "{18FEEFFD-08E9-4524-BB77-120A9E849B4A}",
+    "sourcename": "Call Center",
+    "target": "{2CEF39A9-A5D6-47c7-8195-EFA213D0C197}",
+    "targetname": "Call Center Agent Supervisor",
+    "value": 1
+  },
+  {
+    "source": "{76460DE4-5689-4f72-B722-C897B3B077E0}",
+    "sourcename": "SMS",
+    "target": "{C2959885-880D-4d88-A1C1-375995946852}",
+    "targetname": "Authentication",
+    "value": 1
+  },
+  {
+    "source": "{76460DE4-5689-4f72-B722-C897B3B077E0}",
+    "sourcename": "SMS",
+    "target": "{C2BBAF72-95C4-4b26-8DA9-13C94CA65216}",
+    "targetname": "MultiTxt SMS Account",
+    "value": 1
+  },
+  {
+    "source": "{02D6EAA1-3138-43b0-9F7A-887709221C83}",
+    "sourcename": "Email",
+    "target": "{C2959885-880D-4d88-A1C1-375995946852}",
+    "targetname": "Authentication",
+    "value": 1
+  },
+  {
+    "source": "{6409CF6F-9D56-458d-92EB-EC1A2FA1E3AE}",
+    "sourcename": "VoiceMail",
+    "target": "{C2959885-880D-4d88-A1C1-375995946852}",
+    "targetname": "Authentication",
+    "value": 1
+  },
+  {
+    "source": "{6409CF6F-9D56-458d-92EB-EC1A2FA1E3AE}",
+    "sourcename": "VoiceMail",
+    "target": "{2BA5DFAE-0EB8-4231-BB4A-ACD49276D0FA}",
+    "targetname": "Comverse",
     "value": 1
   }
 ]
