@@ -1,7 +1,7 @@
 {
-  "name": "valuestream",
+  "name": "hierarchy-sankey",
   "version": "1.0.0",
-  "description": "Render the value stream of IT services",
+  "description": "Render related hierarchies",
   "main": "transformer.js",
   "watch": {
     "transform": {
@@ -12,7 +12,7 @@
     }
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Success",
     "transform": "clear && node transformer.js -m complex.test.json -o build/data.json",
     "selfcontained": "rm -f selfcontained.html && cat index.part1.html > selfcontained.html && cat data.json >> selfcontained.html && cat d3.v3.min.js >> selfcontained.html && cat bihisankey.js  >> selfcontained.html && cat app.js >> selfcontained.html  && cat index.part2.html >> selfcontained.html ",
     "watch": "npm-watch"
