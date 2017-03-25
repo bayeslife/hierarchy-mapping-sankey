@@ -12,7 +12,7 @@
     }
   },
   "scripts": {
-    "test": "echo \"Success",
+    "test": "echo \"Success2",
     "transform": "clear && node transformer.js -m complex.test.json -o build/data.json",
     "selfcontained": "rm -f selfcontained.html && cat index.part1.html > selfcontained.html && cat data.json >> selfcontained.html && cat d3.v3.min.js >> selfcontained.html && cat bihisankey.js  >> selfcontained.html && cat app.js >> selfcontained.html  && cat index.part2.html >> selfcontained.html ",
     "watch": "npm-watch"
