@@ -1,5 +1,5 @@
 {
-  "name": "hierarchy-sankey",
+  "name": "hierarchy-mapping-sankey",
   "version": "1.0.0",
   "description": "Render related hierarchies",
   "main": "transformer.js",

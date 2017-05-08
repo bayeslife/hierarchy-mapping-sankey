@@ -1,11 +1,5 @@
 'use strict';
 
-var exampleNodes = cfsNodes.concat(rfsNodes);
-exampleNodes = exampleNodes.concat(psNodes);
-
-
-var exampleLinks = ps_cfs_nodes.concat(cfs_rfs_nodes);
-
 var svg, tooltip, biHiSankey, path, defs, colorScale, highlightColorScale, isTransitioning;
 
 
@@ -17,13 +11,13 @@ var OPACITY = {
     LINK_FADED: 0.05,
     LINK_HIGHLIGHT: 0.9
   },
-  TYPES =       ["ProductCatalogue","ProductSpec","CustomerFacingServiceCatalogue","CustomerFacingServiceSpecificationType", "CustomerFacingServiceSpecification", "ResourceFacingServiceCatalogue", "ResourceFacingServiceSpecification","ResourceFacingServiceSpecificationType"],
-  TYPE_COLORS = ["#0000FF",          "#0000FF",   "#00FF00",                          "#00FF00",                  "#00FF00",                              "#FF0000",                            "#FF0000",                              "#FF0000"],
-  TYPE_HIGHLIGHT_COLORS = ["#0000AA", "#0000AA",  "#00AA00",                          "#00AA00",                  "#00AA00",                              "#AA0000",                             "#AA0000"],
+  TYPES =       ["Customer Segment","ProductCatalogue","ProductSpec","CustomerFacingServiceCatalogue","SecurityControl",   "CustomerFacingServiceSpecificationType", "CustomerFacingServiceSpecification", "ResourceFacingServiceCatalogue", "ResourceFacingServiceSpecification","ResourceFacingServiceSpecificationType"],
+  TYPE_COLORS = ["#0000FF",         "#0000FF",          "#0000FF",   "#00FF00",                        "#00FF00",           "#00FF00",                  "#00FF00",                              "#FF0000",                            "#FF0000",                              "#FF0000"],
+  TYPE_HIGHLIGHT_COLORS = ["#0000AA", "#0000AA",        "#00AA00",   "#00AA00",                        "#00AA00",            "#00AA00",                              "#AA0000",                             "#AA0000"],
   LINK_COLOR = "#b3b3b3",
   INFLOW_COLOR = "#2E86D1",
   OUTFLOW_COLOR = "#D63028",
-  NODE_WIDTH = 36,
+  NODE_WIDTH = 30,
   COLLAPSER = {
     RADIUS: NODE_WIDTH / 2,
     SPACING: 2
@@ -35,13 +29,11 @@ var OPACITY = {
     BOTTOM: OUTER_MARGIN,
     LEFT: OUTER_MARGIN
   },
-  TRANSITION_DURATION = 500,
-  HEIGHT = 1200 - MARGIN.TOP - MARGIN.BOTTOM,
-  WIDTH = 1200 - MARGIN.LEFT - MARGIN.RIGHT,
+  TRANSITION_DURATION = 1000,
+  HEIGHT = 800 - MARGIN.TOP - MARGIN.BOTTOM,
+  WIDTH = 1600 - MARGIN.LEFT - MARGIN.RIGHT,
   LAYOUT_INTERATIONS = 20,
   REFRESH_INTERVAL = 7000;
-
-
 
 var formatNumber = function (d) {
   var numberFormat = d3.format(",.0f"); // zero decimal places
@@ -76,11 +68,37 @@ showTooltip = function () {
       .style("opacity", 1);
 };
 
-colorScale = d3.scale.ordinal().domain(TYPES).range(TYPE_COLORS);
+colorScale = d3.scaleOrdinal().domain(TYPES).range(TYPE_COLORS);
 
-highlightColorScale = d3.scale.ordinal().domain(TYPES).range(TYPE_HIGHLIGHT_COLORS);
+highlightColorScale = d3.scaleOrdinal().domain(TYPES).range(TYPE_HIGHLIGHT_COLORS);
+
+// svg.on("mousemove", mousemove)
+//     .on("mousedown", mousedown)
+//     .on("mouseup", mouseup);
+//
+//     function mousemove(){
+//       console.log("move");
+//     }
+//
+//
+//     function mousedown(){
+//       console.log("down");
+//     }
+//
+//     function mouseup(){
+//       console.log("up");
+//     }
 
 
+var  dragging=false;
+d3.select(window)
+     .on('keydown', function() {
+       if(d3.event.keyCode === 17)
+        dragging=true
+     })
+     .on('keyup', function(){
+       dragging = false;
+       });
 
 svg = d3.select("#chart").append("svg")
         .attr("width", WIDTH + MARGIN.LEFT + MARGIN.RIGHT)
@@ -94,7 +112,7 @@ svg.append("g").attr("id", "collapsers");
 
 tooltip = d3.select("#chart").append("div").attr("id", "tooltip");
 
-tooltip.style("opacity", 0)
+tooltip.style("opacity", 1)
     .append("p")
       .attr("class", "value");
 
@@ -103,8 +121,8 @@ biHiSankey = d3.biHiSankey();
 // Set the biHiSankey diagram properties
 biHiSankey
   .nodeWidth(NODE_WIDTH)
-  .nodeSpacing(10)
-  .linkSpacing(4)
+  .nodeSpacing(7)
+  .linkSpacing(2)
   .arrowheadScaleFactor(0.5) // Specifies that 0.5 of the link's stroke WIDTH should be allowed for the marker at the end of the link.
   .size([WIDTH, HEIGHT]);
 
@@ -155,6 +173,9 @@ function update () {
   var link, linkEnter, node, nodeEnter, collapser, collapserEnter;
 
   function dragmove(node) {
+    if(!dragging)
+      return;
+
     node.x = Math.max(0, Math.min(WIDTH - node.width, d3.event.x));
     node.y = Math.max(0, Math.min(HEIGHT - node.height, d3.event.y));
     d3.select(this).attr("transform", "translate(" + node.x + "," + node.y + ")");
@@ -219,10 +240,12 @@ function update () {
     if (node.state === "collapsed") { expand(node); }
     else { collapse(node); }
 
+    restoreLinksAndNodes();
     biHiSankey.relayout();
     update();
+    update();
     link.attr("d", path);
-    restoreLinksAndNodes();
+
   }
 
   function highlightConnected(g) {
@@ -254,9 +277,13 @@ function update () {
   link = svg.select("#links").selectAll("path.link")
     .data(biHiSankey.visibleLinks(), function (d) { return d.id; });
 
+  link.style("stroke-WIDTH", function (d) {
+      return Math.max(1, d.thickness); })
+
   link.transition()
     .duration(TRANSITION_DURATION)
-    .style("stroke-WIDTH", function (d) { return Math.max(1, d.thickness); })
+    .style("stroke-WIDTH", function (d) {
+      return Math.max(1, d.thickness); })
     .attr("d", path)
     .style("opacity", OPACITY.LINK_DEFAULT);
 
@@ -315,7 +342,8 @@ function update () {
       .delay(TRANSITION_DURATION)
       .duration(TRANSITION_DURATION)
       .attr("d", path)
-      .style("stroke-WIDTH", function (d) { return Math.max(1, d.thickness); })
+      .style("stroke-WIDTH", function (d) {
+        return Math.max(1, d.thickness); })
       .style("opacity", OPACITY.LINK_DEFAULT);
 
 
@@ -367,12 +395,19 @@ function update () {
       .style("opacity", OPACITY.NODE_DEFAULT)
       .attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; });
 
-  nodeEnter.append("text");
+  nodeEnter.append("text")
+  // .text(function (d) {
+  //   return d.name; })
+  //       .attr("x", -6)
+  //       .attr("y", function (d) { return d.height / 2; })
+  //       .attr("dy", ".35em")
+  //       .attr("text-anchor", "end")
+  //       .attr("transform", null)
+
   nodeEnter.append("rect")
     .style("fill", function (d) {
       var t = d.type.replace(/ /g, "");
       d.color = colorScale(t);
-       console.log(t + " " + d.color);
       return d.color;
     })
     .style("stroke", function (d) {
@@ -380,16 +415,41 @@ function update () {
     })
     .style("stroke-WIDTH", "1px")
     .attr("height", function (d) { return d.height; })
-    .attr("width", biHiSankey.nodeWidth());
+    .attr("width", biHiSankey.nodeWidth())
+
+
+
+    // nodeEnter.append("a")
+    //   .attr("xlink:href", function (d) {
+    //       return "#"+d.id
+    //     })
+    //     append("text")
+    //     append("foobar");
 
   // nodeEnter.append("image")
   //   .style("stroke", function (d) {
   //       return d3.rgb(colorScale(d.type.replace(/ .*/, ""))).darker(0.1);
   //     })
   //   .style("stroke-WIDTH", "1px")
-  //   .attr("href","http://merc.tv/img/uml/robustness.gif")
+  //   .attr("xlink:href",function(d){
+  //     return "#"+d.id
+  //   })
   //   .attr("height", function (d) { return d.height; })
   //   .attr("width", biHiSankey.nodeWidth());
+
+  // nodeEnter.append("a")
+  //   .attr("xlink:href", function (d) {
+  //       return "#"+d.id
+  //     })
+  //   .append("text")
+  //   .attr("transform","translate(30,0)").text(function(){
+  //     return "test";
+  //   });
+
+  node.on("click", function(node){
+     if(dragging)
+      window.location = "#"+ node.id;
+  });
 
   node.on("mouseenter", function (g) {
     if (!isTransitioning) {
@@ -407,17 +467,23 @@ function update () {
         })
         .style("fill-opacity", OPACITY.LINK_DEFAULT);
 
-      tooltip
-        .style("left", g.x + MARGIN.LEFT + "px")
-        .style("top", g.y + g.height + MARGIN.TOP + 15 + "px")
-        .transition()
-          .duration(TRANSITION_DURATION)
-          .style("opacity", 1).select(".value")
-          .text(function () {
-            var additionalInstructions = g.children.length ? "\n\n(Double click to expand)" : "";
-            //return g.name + "\nNet flow: " + g.netFlow + additionalInstructions;
-            return g.name + ":" + g.type +"\n\n"+ g.description + "\n\n(Double click to expand)";
-          });
+      showTooltip().select(".value")
+        .text(function () {
+          return "Ctl click to navigate";
+        });
+
+
+      // tooltip
+      //   .style("left", g.x + MARGIN.LEFT + "px")
+      //   .style("top", g.y + g.height + MARGIN.TOP + 15 + "px")
+      //   .transition()
+      //     .duration(TRANSITION_DURATION)
+      //     .style("opacity", 1).select(".value")
+      //     .text(function () {
+      //       var additionalInstructions = g.children.length ? "\n\n(Double click to expand)" : "";
+      //       //return g.name + "\nNet flow: " + g.netFlow + additionalInstructions;
+      //       return "(Ctl click to navigate)";
+      //     });
     }
   });
 
@@ -431,11 +497,12 @@ function update () {
   node.filter(function (d) { return d.children.length; })
     .on("dblclick", showHideChildren);
 
+
   // allow nodes to be dragged to new positions
-  node.call(d3.behavior.drag()
-    .origin(function (d) { return d; })
-    .on("dragstart", function () { this.parentNode.appendChild(this); })
-    .on("drag", dragmove));
+  node.call(d3.drag()
+    .subject(function (d) { return d; })
+    .on("start", function () { this.parentNode.appendChild(this); })
+    .on("drag", dragmove ));
 
   // add in the text for the nodes
   node.filter(function (d) { return d.value !== 0; })
@@ -467,7 +534,7 @@ function update () {
   collapserEnter
     .style("opacity", OPACITY.NODE_DEFAULT)
     .attr("transform", function (d) {
-      return "translate(" + (d.x + d.width / 2) + "," + (d.y + COLLAPSER.RADIUS) + ")";
+      return "translate(" + (d.x + d.width / 2) + "," + (COLLAPSER.RADIUS) + ")";
     });
 
   collapserEnter.on("dblclick", showHideChildren);
@@ -531,13 +598,15 @@ function update () {
 biHiSankey
   .nodes(exampleNodes)
   .links(exampleLinks)
-  .arrowheadScaleFactor(0.7)
+  .arrowheadScaleFactor(0.5)
   .initializeNodes(function (node) {
     //node.state = node.parent ? "contained" : "collapsed";
     node.state = node.children.length > 0 ? "expanded" : "collapsed";
+    //node.state = "collapsed";
   })
   .layout(LAYOUT_INTERATIONS);
 
 disableUserInterractions(2 * TRANSITION_DURATION);
 
+update();
 update();

@@ -92,10 +92,27 @@ d3.biHiSankey = function () {
 
       sourceNode = nodeMap[link.source] || link.source;
       targetNode = nodeMap[link.target] || link.target;
+      if(targetNode==null){
+        console.log("Missing Link"+ link.target);
+        return;
+      }
+
+      if(sourceNode==null){
+          console.log("Missing Link"+ link.source);
+          return;
+      }
       link.id = link.source + '-' + link.target;
       link.source = sourceNode;
       link.target = targetNode;
+
+
+      //console.log(link);
+
       sourceNode.sourceLinks.push(link);
+      if(targetNode.targetLinks==null){
+        console.log("Missing Link"+ targetNode.name);
+        return;
+      }
       targetNode.targetLinks.push(link);
     });
   }
@@ -226,6 +243,9 @@ d3.biHiSankey = function () {
       if (sourceNode.connectedNodes.indexOf(targetNode) < 0) {
         sourceNode.connectedNodes.push(targetNode);
       }
+      //console.log();
+      //console.log(sourceNode);
+      //console.log(targetNode);
       if (targetNode.connectedNodes.indexOf(sourceNode) < 0) {
         targetNode.connectedNodes.push(sourceNode);
       }
@@ -277,7 +297,7 @@ d3.biHiSankey = function () {
         maxX = d3.max(nodes, function (node) { return node.x; }) - minX;
 
         if(maxX=1)
-        maxX = 8;
+        maxX = 10;
     xScaleFactor = (size[0] - nodeWidth) / maxX;
 
     nodes.forEach(function (node) {
@@ -404,8 +424,8 @@ d3.biHiSankey = function () {
 
     function calculateLinkThickness() {
       links.forEach(function (link) {
-        if(link.value>10)
-          console.log("here");
+        // if(link.value>10)
+        //   console.log("here");
         link.thickness = link.value * yScaleFactor;
 
       });

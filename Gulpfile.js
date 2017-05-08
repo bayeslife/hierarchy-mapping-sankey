@@ -29,8 +29,12 @@ var args = yargs
 var sourceFolder = args['s'];
 var destFolder= args['t'];
 
+
+
 gulp.task('json',function() {
-  return watch([path.join(sourceFolder,'/**/*.json')])
+  var watchpath = path.join(sourceFolder,'/**/*.json');
+  console.log("Watching "+ watchpath);
+  return watch([watchpath])
    .pipe(processor(destFolder))
 })
 
