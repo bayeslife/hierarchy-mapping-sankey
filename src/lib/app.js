@@ -1,7 +1,8 @@
 'use strict';
 
-var svg, tooltip, biHiSankey, path, defs, colorScale, highlightColorScale, isTransitioning;
+function renderSankey(dwidth,dheight,config){
 
+var svg, tooltip, biHiSankey, path, defs, colorScale, highlightColorScale, isTransitioning;
 
 var OPACITY = {
     NODE_DEFAULT: 0.9,
@@ -11,9 +12,10 @@ var OPACITY = {
     LINK_FADED: 0.05,
     LINK_HIGHLIGHT: 0.9
   },
-  TYPES =       ["Customer Segment","ProductCatalogue","ProductSpec","CustomerFacingServiceCatalogue","SecurityControl",   "CustomerFacingServiceSpecificationType", "CustomerFacingServiceSpecification", "ResourceFacingServiceCatalogue", "ResourceFacingServiceSpecification","ResourceFacingServiceSpecificationType"],
-  TYPE_COLORS = ["#0000FF",         "#0000FF",          "#0000FF",   "#00FF00",                        "#00FF00",           "#00FF00",                  "#00FF00",                              "#FF0000",                            "#FF0000",                              "#FF0000"],
-  TYPE_HIGHLIGHT_COLORS = ["#0000AA", "#0000AA",        "#00AA00",   "#00AA00",                        "#00AA00",            "#00AA00",                              "#AA0000",                             "#AA0000"],
+  getType = function(node){return node.type;},
+  //TYPES =       ["Customer Segment","ProductCatalogue","ProductSpec","CustomerFacingServiceCatalogue","SecurityControl",   "CustomerFacingServiceSpecificationType", "CustomerFacingServiceSpecification", "ResourceFacingServiceCatalogue", "ResourceFacingServiceSpecification","ResourceFacingServiceSpecificationType"],
+  //TYPE_COLORS = ["#0000FF",         "#0000FF",          "#0000FF",   "#00FF00",                        "#00FF00",           "#00FF00",                  "#00FF00",                              "#FF0000",                            "#FF0000",                              "#FF0000"],
+  //TYPE_HIGHLIGHT_COLORS = ["#0000AA", "#0000AA",        "#00AA00",   "#00AA00",                        "#00AA00",            "#00AA00",                              "#AA0000",                             "#AA0000"],
   LINK_COLOR = "#b3b3b3",
   INFLOW_COLOR = "#2E86D1",
   OUTFLOW_COLOR = "#D63028",
@@ -30,11 +32,20 @@ var OPACITY = {
     LEFT: OUTER_MARGIN
   },
   TRANSITION_DURATION = 1000,
-  HEIGHT = 800 - MARGIN.TOP - MARGIN.BOTTOM,
-  WIDTH = 1600 - MARGIN.LEFT - MARGIN.RIGHT,
+  HEIGHT = dheight - MARGIN.TOP - MARGIN.BOTTOM,
+  WIDTH = dwidth - MARGIN.LEFT - MARGIN.RIGHT,
   LAYOUT_INTERATIONS = 20,
   REFRESH_INTERVAL = 7000;
-
+  // if(config){
+  //   if(config.getType)
+  //     getType = config.getType;
+  //   if(config && config.TYPES)
+  //     TYPES=config.TYPES;
+  //   if(config.TYPE_COLORS)
+  //     TYPE_COLORS=config.TYPE_COLORS;
+  //   if(config.TYPE_HIGHLIGHT_COLORS)
+  //     TYPE_HIGHLIGHT_COLORS = config.TYPE_HIGHLIGHT_COLORS;
+  // }
 var formatNumber = function (d) {
   var numberFormat = d3.format(",.0f"); // zero decimal places
   return "£" + numberFormat(d);
@@ -60,17 +71,20 @@ hideTooltip = function () {
 },
 
 showTooltip = function () {
-  return tooltip
+  tooltip
     .style("left", d3.event.pageX + "px")
     .style("top", d3.event.pageY + 15 + "px")
     .transition()
       .duration(TRANSITION_DURATION)
       .style("opacity", 1);
+    return tooltip;
 };
 
-colorScale = d3.scaleOrdinal().domain(TYPES).range(TYPE_COLORS);
+colorScale = d3.scaleOrdinal().domain(config.TYPES).range(config.TYPE_COLORS);
 
-highlightColorScale = d3.scaleOrdinal().domain(TYPES).range(TYPE_HIGHLIGHT_COLORS);
+highlightColorScale = d3.scaleOrdinal().domain(config.TYPES).range(config.TYPE_HIGHLIGHT_COLORS);
+
+
 
 // svg.on("mousemove", mousemove)
 //     .on("mousedown", mousedown)
@@ -219,12 +233,12 @@ function update () {
     node
       .selectAll("rect")
         .style("fill", function (d) {
-          var t = d.type.replace(/ /g, "")
+          var t = config.getType(d).replace(/ /g, "")
           d.color = colorScale(t);
           return d.color;
         })
         .style("stroke", function (d) {
-          return d3.rgb(colorScale(d.type.replace(/ /g, ""))).darker(0.1);
+          return d3.rgb(colorScale(config.getType(d).replace(/ /g, ""))).darker(0.1);
         })
         .style("fill-opacity", OPACITY.NODE_DEFAULT);
 
@@ -297,7 +311,9 @@ function update () {
 
   linkEnter.on('mouseenter', function (d) {
     if (!isTransitioning) {
-      showTooltip().select(".value").text(function () {
+      var v =showTooltip().select(".value");
+      v.selectAll("*").remove();
+      v.append("div").text(function () {
         if (d.direction > 0) {
           //return d.source.name + " consumes " + d.target.name + "\n" + formatNumber(d.value);
           return d.source.name + " -> " + d.target.name;
@@ -357,12 +373,13 @@ function update () {
     .style("opacity", OPACITY.NODE_DEFAULT)
     .select("rect")
       .style("fill", function (d) {
-        d.color = colorScale(d.type.replace(/ /g, ""));
+        d.color = colorScale(config.getType(d).replace(/ /g, ""));
         return d.color;
       })
-      .style("stroke", function (d) { return d3.rgb(colorScale(d.type.replace(/ /g, ""))).darker(0.1); })
+      .style("stroke", function (d) { return d3.rgb(colorScale(config.getType(d).replace(/ /g, ""))).darker(0.1); })
       .style("stroke-WIDTH", "1px")
-      .attr("height", function (d) { return d.height; })
+      .attr("height", function (d) {
+        return d.height<1 ? 1 : d.height; })
       .attr("width", biHiSankey.nodeWidth());
 
 
@@ -406,15 +423,16 @@ function update () {
 
   nodeEnter.append("rect")
     .style("fill", function (d) {
-      var t = d.type.replace(/ /g, "");
+      var t = config.getType(d).replace(/ /g, "");
       d.color = colorScale(t);
       return d.color;
     })
     .style("stroke", function (d) {
-      return d3.rgb(colorScale(d.type.replace(/ /g, ""))).darker(0.1);
+      return d3.rgb(colorScale(config.getType(d).replace(/ /g, ""))).darker(0.1);
     })
     .style("stroke-WIDTH", "1px")
-    .attr("height", function (d) { return d.height; })
+    .attr("height", function (d) {
+      return d.height; })
     .attr("width", biHiSankey.nodeWidth())
 
 
@@ -459,19 +477,17 @@ function update () {
 
       d3.select(this).select("rect")
         .style("fill", function (d) {
-          d.color = d.netFlow > 0 ? INFLOW_COLOR : OUTFLOW_COLOR;
+          //d.color = d.netFlow > 0 ? INFLOW_COLOR : OUTFLOW_COLOR;
+          var c = config.getType(g);
+          d.color = highlightColorScale(c.replace(/ /g, ""));
           return d.color;
         })
         .style("stroke", function (d) {
-          return d3.rgb(d.color).darker(0.1);
+          return d3.rgb(d.color).darker(0.5);
         })
         .style("fill-opacity", OPACITY.LINK_DEFAULT);
 
-      showTooltip().select(".value")
-        .text(function () {
-          return "Ctl click to navigate";
-        });
-
+        config.getNodeToolip(showTooltip().select(".value"),g);
 
       // tooltip
       //   .style("left", g.x + MARGIN.LEFT + "px")
@@ -527,7 +543,7 @@ function update () {
   collapserEnter.append("circle")
     .attr("r", COLLAPSER.RADIUS)
     .style("fill", function (d) {
-      d.color = colorScale(d.type.replace(/ /g, ""));
+      d.color = colorScale(config.getType(d).replace(/ /g, ""));
       return d.color;
     });
 
@@ -555,12 +571,14 @@ function update () {
 
   collapser.on("mouseenter", function (g) {
     if (!isTransitioning) {
-      showTooltip().select(".value")
-        .text(function () {
+      var v = showTooltip().select(".value");
+      v.selectAll("*").remove();
+      v.append("div").text(function () {
           return g.name + "\n"+ g.type+"\n(Double click to collapse)";
         });
 
-      var highlightColor = highlightColorScale(g.type.replace(/ /g, ""));
+      var c = config.getType(g);
+      var highlightColor = highlightColorScale(c.replace(/ /g, ""));
 
       d3.select(this)
         .style("opacity", OPACITY.NODE_HIGHLIGHT)
@@ -610,3 +628,5 @@ disableUserInterractions(2 * TRANSITION_DURATION);
 
 update();
 update();
+
+}

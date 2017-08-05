@@ -13,7 +13,7 @@ d3.biHiSankey = function () {
     leafNodes = [],
     links = [],
     xScaleFactor = 1,
-    yScaleFactor = 1,
+    yScaleFactor = 2,
     defaultLinkCurvature = 0.5;
 
   function center(node) {
@@ -85,22 +85,36 @@ d3.biHiSankey = function () {
     });
   }
 
+  function cleanNodeLinks() {
+    var sourceNode, targetNode;
+    var newlinks = [];
+    links.forEach(function (link) {
+      sourceNode = nodeMap[link.source] || link.source;
+      targetNode = nodeMap[link.target] || link.target;
+      if(targetNode==null || targetNode.targetLinks==undefined){
+        console.log("Dropping Target Link"+ link.targetname);
+        return;
+      }
+      if(sourceNode==null || sourceNode.sourceLinks==undefined){
+          if(link.sourcename==='VodafoneOneBusiness')
+          console.log("Dropping Source Link"+ link.sourcename);
+
+          return;
+      }
+      newlinks.push(link);
+    })
+    links = newlinks;
+  }
+
   // Populate the sourceLinks and targetLinks for each node.
   function computeNodeLinks() {
     var sourceNode, targetNode;
     links.forEach(function (link) {
 
+      //console.log(link);
       sourceNode = nodeMap[link.source] || link.source;
       targetNode = nodeMap[link.target] || link.target;
-      if(targetNode==null){
-        console.log("Missing Link"+ link.target);
-        return;
-      }
 
-      if(sourceNode==null){
-          console.log("Missing Link"+ link.source);
-          return;
-      }
       link.id = link.source + '-' + link.target;
       link.source = sourceNode;
       link.target = targetNode;
@@ -110,7 +124,7 @@ d3.biHiSankey = function () {
 
       sourceNode.sourceLinks.push(link);
       if(targetNode.targetLinks==null){
-        console.log("Missing Link"+ targetNode.name);
+        //console.log("Missing Link"+ targetNode.name);
         return;
       }
       targetNode.targetLinks.push(link);
@@ -315,17 +329,9 @@ d3.biHiSankey = function () {
           }
         },
         setValues = function (node) {
-          // if(node.type=='supplier-api'){
-          //    node.x = 30+x;
-          //  } else if(node.type=='supplier'){
-          //      node.x = 30+x;
-          // } else if(node.type=='integration'){
-          //     node.x = 10+x;
-          // } else if(node.type=='application-api'){
-          //     node.x = 20+x;
-          // } else if(node.type=='application'){
-          //     node.x = 20+x;
-          //
+          // if(typeof node != 'object'){
+          //   return;
+          // }
           if(node.min){
             node.x = node.min+ x;
           } else
@@ -714,6 +720,7 @@ d3.biHiSankey = function () {
   biHiSankey.initializeNodes = function (callback) {
     initializeNodeMap();
     computeNodeHierarchy();
+    cleanNodeLinks();
     computeNodeLinks();
     computeAncestorLinks();
     mergeLinks();
