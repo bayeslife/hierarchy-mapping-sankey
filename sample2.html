@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Integration Flow Overview</title>
+    <link href="src/css/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="chart"></div>
+
+    <script src="./build/bundle.js"></script>
+
+    <script src="src/data/sample2/TAAS-ProductCatalogue-hierarchy.Customer Segment.json"></script>
+    <script src="src/data/sample2/CFS-hierarchy.Customer Facing Service Catalogue.json"></script>
+    <script src="src/data/sample2/RFS-hierarchy.Resource Facing Service Catalogue.json"></script>
+    <script src="src/data/sample2/CFS-RFS-map.Customer Facing Service Specification.json"></script>
+    <script src="src/data/sample2/PD-CFS-map.ProductSpec.json"></script>
+
+    <script>
+    var renderSankey = require('hierarchy-mapping-sankey');
+
+    var exampleNodes = psNodes.concat(cfsNodes).concat(rfsNodes);
+    var exampleLinks = ps_cfs_nodes.concat(cfs_rfs_nodes);
+
+    var config = {
+  getNodeToolip: function(selection,node){
+  selection.selectAll("*").remove();
+  var div = selection.append("div").text(function(){
+    return node.description? node.description : "";
+  })
+  },
+  getType: function(node) {
+  console.log(node.type)
+  return node.type ? node.type : "default";
+  },
+  TYPES:                  ["CustomerSegment","ProductSpec","ProductCatalogue", "CustomerFacingServiceSpecification", "ServiceSpecificationType", "ResourceFacingServiceSpecification","ResourceServiceSpecificationType"],
+  TYPE_COLORS:            ["#0000EE",          "#0000FF",    "#0000EE",          "#0000EE",                            "#00FF00",                  "#00EE00"],
+  TYPE_HIGHLIGHT_COLORS:  ["#0000CC",          "#0000AA",    "#0000BB",          "#000099",                            "#00AA00",                  "#009900"],
+  }
+
+    renderSankey(1200,800,config);
+    </script>
+  </body>
+</html>

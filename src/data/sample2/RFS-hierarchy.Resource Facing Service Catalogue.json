@@ -1,0 +1,18 @@
+var rfsNodes=[
+  {
+    "type": "Resource Facing Service Catalogue",
+    "id": "{3B96AF65-0BDD-4732-B918-74B4D74828C5}",
+    "name": "UC RFS",
+    "description": "",
+    "min": 9,
+    "parent": "null"
+  },
+  {
+    "type": "Resource Facing Service",
+    "id": "{3B96AF65-0BDD-4732-B918-74B4D74828C4}",
+    "name": "Fortinet",
+    "description": "",
+    "min": 10,
+    "parent": "{3B96AF65-0BDD-4732-B918-74B4D74828C5}"
+  }
+]

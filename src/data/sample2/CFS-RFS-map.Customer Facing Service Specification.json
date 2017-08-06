@@ -1,0 +1,10 @@
+var cfs_rfs_nodes =[
+  {
+    "source": "{3B96AF65-0BDD-4732-B918-74B4D74828C4}",
+    "sourcename": "Fortinet",
+    "target": "{04C8B0C5-593B-4366-BA13-F071970D538D}",
+    "targetname": "Legacy Gateway Interconnect",
+    "value": 1
+  },
+
+]

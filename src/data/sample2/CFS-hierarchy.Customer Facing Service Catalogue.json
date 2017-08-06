@@ -1,0 +1,138 @@
+var cfsNodes=[
+  {
+    "type": "Customer Facing Service Catalogue",
+    "id": "{CA66B085-4A11-486e-B043-2525BAC3F00C}",
+    "name": "Enterprise Service Catalogue",
+    "description": "",
+    "min": 4,
+    "parent": "null"
+  },
+  {
+    "type": "Customer Facing Service Specification Type",
+    "id": "{D4A6531B-E5D4-404a-BCC4-474F74A7216C}",
+    "name": "Security Service Catalogue",
+    "description": "",
+    "min": 5,
+    "parent": "{CA66B085-4A11-486e-B043-2525BAC3F00C}"
+  },
+  {
+    "type": "SecurityControl",
+    "id": "{45E0EC7A-2C36-460c-9494-08A770C16C26}",
+    "name": "Identification and Authentication",
+    "description": "",
+    "min": 6,
+    "parent": "{D4A6531B-E5D4-404a-BCC4-474F74A7216C}"
+  },
+  {
+    "type": "Customer Facing Service Specification",
+    "id": "{FC2A987D-65CE-420b-8F75-DFD56F7645BD}",
+    "name": "Authentication",
+    "description": "",
+    "min": 7,
+    "parent": "{45E0EC7A-2C36-460c-9494-08A770C16C26}"
+  },
+  {
+    "type": "Customer Facing Service Specification",
+    "id": "{82075321-355F-46d9-97A8-586AC16B1D4D}",
+    "name": "Managed Public Key Infrastructure",
+    "description": "Lifecycling of Security Keys\r\n",
+    "min": 7,
+    "parent": "{45E0EC7A-2C36-460c-9494-08A770C16C26}"
+  },
+  {
+    "type": "SecurityControl",
+    "id": "{C2077434-1E1F-4b97-BA90-E799406FF06B}",
+    "name": "System and Communication Protection",
+    "description": "",
+    "min": 6,
+    "parent": "{D4A6531B-E5D4-404a-BCC4-474F74A7216C}"
+  },
+  {
+    "type": "Customer Facing Service Specification",
+    "id": "{27DF6C8A-D97E-4724-A902-F4C94A239308}",
+    "name": "Managed WAN",
+    "description": "MNS",
+    "min": 7,
+    "parent": "{C2077434-1E1F-4b97-BA90-E799406FF06B}"
+  },
+  {
+    "type": "Customer Facing Service Specification",
+    "id": "{59F49E48-5890-49a5-A9B9-046A1E2724C3}",
+    "name": "Access Connectivity",
+    "description": "Includes IAD, in the case of PD25 the options are 1Gbps or 10Bgps port",
+    "min": 7,
+    "parent": "{C2077434-1E1F-4b97-BA90-E799406FF06B}"
+  },
+  {
+    "type": "Customer Facing Service Specification",
+    "id": "{F7D566A1-77F3-4199-9537-AC080D01B4C0}",
+    "name": "Remote connectiviity",
+    "description": "Zero cost uplift to PD180",
+    "min": 7,
+    "parent": "{C2077434-1E1F-4b97-BA90-E799406FF06B}"
+  },
+  {
+    "type": "Customer Facing Service Specification",
+    "id": "{04C8B0C5-593B-4366-BA13-F071970D538D}",
+    "name": "Legacy Gateway Interconnect",
+    "description": "",
+    "min": 7,
+    "parent": "{C2077434-1E1F-4b97-BA90-E799406FF06B}"
+  },
+  {
+    "type": "Customer Facing Service Specification",
+    "id": "{E6509D6C-B00B-49fa-9FC7-202885C38C8F}",
+    "name": "Managed WiFi",
+    "description": "",
+    "min": 7,
+    "parent": "{C2077434-1E1F-4b97-BA90-E799406FF06B}"
+  },
+  {
+    "type": "Customer Facing Service Specification",
+    "id": "{7DD6D90F-6732-4709-88A3-BCAD6E375ACA}",
+    "name": "Managed LAN",
+    "description": "",
+    "min": 7,
+    "parent": "{C2077434-1E1F-4b97-BA90-E799406FF06B}"
+  },
+  {
+    "type": "SecurityControl",
+    "id": "{5733799A-680A-46e0-AC24-7B2549AD98E7}",
+    "name": "Access Control",
+    "description": "",
+    "min": 6,
+    "parent": "{D4A6531B-E5D4-404a-BCC4-474F74A7216C}"
+  },
+  {
+    "type": "Customer Facing Service Specification Type",
+    "id": "{14979531-7BE9-470b-A725-C001DAE5C6B0}",
+    "name": "Self Service Access Control",
+    "description": "This is my vodafone portal\r\n",
+    "min": 7,
+    "parent": "{5733799A-680A-46e0-AC24-7B2549AD98E7}"
+  },
+  {
+    "type": "SecurityControl",
+    "id": "{5D38DF6F-8536-43af-9FDD-070F5B14D6AB}",
+    "name": "Configuration Management",
+    "description": "",
+    "min": 6,
+    "parent": "{D4A6531B-E5D4-404a-BCC4-474F74A7216C}"
+  },
+  {
+    "type": "Customer Facing Service Specification",
+    "id": "{9F04C680-3B4F-4fc8-8075-19023892E28C}",
+    "name": "Managed Mobile",
+    "description": "Provided on the Mobile Device Management (MDM) platform",
+    "min": 7,
+    "parent": "{5D38DF6F-8536-43af-9FDD-070F5B14D6AB}"
+  },
+  {
+    "type": "SecurityControl",
+    "id": "{71DD37C5-FFE2-4c0c-B3DB-28D8097AE54C}",
+    "name": "Audit and Accountability",
+    "description": "",
+    "min": 6,
+    "parent": "{D4A6531B-E5D4-404a-BCC4-474F74A7216C}"
+  }
+]

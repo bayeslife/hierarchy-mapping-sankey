@@ -1,0 +1,65 @@
+var ps_cfs_nodes = [
+  {
+    "source": "{F7825772-43AE-4704-AC1A-0D873618D430}",
+    "sourcename": "Legacy Gateway",
+    "target": "{04C8B0C5-593B-4366-BA13-F071970D538D}",
+    "targetname": "Legacy Gateway Interconnect",
+    "value": 1
+  },
+  {
+    "source": "{8CB116E9-3679-4e5f-AAE9-7ADBF3853054}",
+    "sourcename": "TAAS 2 PD?",
+    "target": "{82075321-355F-46d9-97A8-586AC16B1D4D}",
+    "targetname": "Managed Public Key Infrastructure",
+    "value": 1
+  },
+  {
+    "source": "{8CB116E9-3679-4e5f-AAE9-7ADBF3853054}",
+    "sourcename": "TAAS 2 PD?",
+    "target": "{E6509D6C-B00B-49fa-9FC7-202885C38C8F}",
+    "targetname": "Managed WiFi",
+    "value": 1
+  },
+  {
+    "source": "{8CB116E9-3679-4e5f-AAE9-7ADBF3853054}",
+    "sourcename": "TAAS 2 PD?",
+    "target": "{FC2A987D-65CE-420b-8F75-DFD56F7645BD}",
+    "targetname": "Authentication",
+    "value": 1
+  },
+  {
+    "source": "{8CB116E9-3679-4e5f-AAE9-7ADBF3853054}",
+    "sourcename": "TAAS 2 PD?",
+    "target": "{14979531-7BE9-470b-A725-C001DAE5C6B0}",
+    "targetname": "Self Service Access Control",
+    "value": 1
+  },
+  {
+    "source": "{8CB116E9-3679-4e5f-AAE9-7ADBF3853054}",
+    "sourcename": "TAAS 2 PD?",
+    "target": "{9F04C680-3B4F-4fc8-8075-19023892E28C}",
+    "targetname": "Managed Mobile",
+    "value": 1
+  },
+  {
+    "source": "{8CB116E9-3679-4e5f-AAE9-7ADBF3853054}",
+    "sourcename": "TAAS 2 PD?",
+    "target": "{F7D566A1-77F3-4199-9537-AC080D01B4C0}",
+    "targetname": "Remote connectiviity",
+    "value": 1
+  },
+  {
+    "source": "{8CB116E9-3679-4e5f-AAE9-7ADBF3853054}",
+    "sourcename": "TAAS 2 PD?",
+    "target": "{59F49E48-5890-49a5-A9B9-046A1E2724C3}",
+    "targetname": "Access Connectivity",
+    "value": 1
+  },
+  {
+    "source": "{8CB116E9-3679-4e5f-AAE9-7ADBF3853054}",
+    "sourcename": "TAAS 2 PD?",
+    "target": "{7DD6D90F-6732-4709-88A3-BCAD6E375ACA}",
+    "targetname": "Managed LAN",
+    "value": 1
+  }
+]

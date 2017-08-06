@@ -1,0 +1,34 @@
+var psNodes=[
+  {
+    "type": "Customer Segment",
+    "id": "{A0D210D8-13E3-491b-BC39-A632B695778A}",
+    "name": "TAAS",
+    "description": "",
+    "min": 0,
+    "parent": "null"
+  },
+  {
+    "type": "ProductCatalogue",
+    "id": "{77F0EDA7-C612-4e6c-BC5A-91FE8209FE7F}",
+    "name": "TAAS Security",
+    "description": "",
+    "min": 1,
+    "parent": "{A0D210D8-13E3-491b-BC39-A632B695778A}"
+  },
+  {
+    "type": "ProductSpec",
+    "id": "{8CB116E9-3679-4e5f-AAE9-7ADBF3853054}",
+    "name": "TAAS 2 PD?",
+    "description": "",
+    "min": 2,
+    "parent": "{77F0EDA7-C612-4e6c-BC5A-91FE8209FE7F}"
+  },
+  {
+    "type": "ProductSpec",
+    "id": "{F7825772-43AE-4704-AC1A-0D873618D430}",
+    "name": "Legacy Gateway",
+    "description": "This Product is applicable for the majority of Subscribing Parties and provides access to GNet services from the Subscribing Party Legacy WAN.\r\nThe Vodafone Legacy Gateway product essentially provides a legacy gateway function between the subscribing party Legacy WAN and the GNET, is based in diverse Vodafone Data Centres configured in High Availability mode, and connects directly to the GNet and Legacy Network MPLS networks.\r\nA range of tools are provided to assist transition to GNet, including VPN options to connect to other Service Providers and Home Connect to allow devices on the GNet to connect back to the Legacy WAN.\r\n",
+    "min": 2,
+    "parent": "{77F0EDA7-C612-4e6c-BC5A-91FE8209FE7F}"
+  }
+]
