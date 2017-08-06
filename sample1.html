@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Integration Flow Overview</title>
+    <link rel="stylesheet" type="text/css" href="src/css/style.css">
+  </head>
+  <body>>
+    <div id="chart"></div>
+
+    <script src="src/data/sample1.json"></script>
+
+    <script src="build/bundle.js"></script>
+
+    <script>
+      var renderSankey = require('hierarchy-mapping-sankey');
+
+      var config = {
+  getNodeToolip: function(selection,node){
+    selection.selectAll("*").remove();
+    var div = selection.append("div").text(function(){
+      return node.description? node.description : "";
+    })
+  },
+  getType: function(node) {
+    console.log(node.type)
+    return node.type ? node.type : "default";
+  },
+  TYPES:                  ["CustomerFacingServiceSpecification", "ServiceSpecificationType", "ResourceFacingServiceSpecification","ResourceServiceSpecificationType"],
+  TYPE_COLORS:            ["#0000FF",                               "#0000EE",                  "#00FF00",                              "#00EE00"],
+  TYPE_HIGHLIGHT_COLORS:  ["#0000AA",                               "#000099",                  "#00AA00",                              "#009900"],
+}
+
+      renderSankey(600,800,config);
+    </script>
+  </body>
+</html>

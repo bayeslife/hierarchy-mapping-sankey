@@ -1,632 +1,637 @@
 'use strict';
 
+var d3 = require('d3');
+var sankey = require('biHierarchicalSankey');
+
 function renderSankey(dwidth,dheight,config){
 
-var svg, tooltip, biHiSankey, path, defs, colorScale, highlightColorScale, isTransitioning;
+  var svg, tooltip, biHiSankey, path, defs, colorScale, highlightColorScale, isTransitioning;
 
-var OPACITY = {
-    NODE_DEFAULT: 0.9,
-    NODE_FADED: 0.1,
-    NODE_HIGHLIGHT: 0.8,
-    LINK_DEFAULT: 0.6,
-    LINK_FADED: 0.05,
-    LINK_HIGHLIGHT: 0.9
+  var OPACITY = {
+      NODE_DEFAULT: 0.9,
+      NODE_FADED: 0.1,
+      NODE_HIGHLIGHT: 0.8,
+      LINK_DEFAULT: 0.6,
+      LINK_FADED: 0.05,
+      LINK_HIGHLIGHT: 0.9
+    },
+    getType = function(node){return node.type;},
+    //TYPES =       ["Customer Segment","ProductCatalogue","ProductSpec","CustomerFacingServiceCatalogue","SecurityControl",   "CustomerFacingServiceSpecificationType", "CustomerFacingServiceSpecification", "ResourceFacingServiceCatalogue", "ResourceFacingServiceSpecification","ResourceFacingServiceSpecificationType"],
+    //TYPE_COLORS = ["#0000FF",         "#0000FF",          "#0000FF",   "#00FF00",                        "#00FF00",           "#00FF00",                  "#00FF00",                              "#FF0000",                            "#FF0000",                              "#FF0000"],
+    //TYPE_HIGHLIGHT_COLORS = ["#0000AA", "#0000AA",        "#00AA00",   "#00AA00",                        "#00AA00",            "#00AA00",                              "#AA0000",                             "#AA0000"],
+    LINK_COLOR = "#b3b3b3",
+    INFLOW_COLOR = "#2E86D1",
+    OUTFLOW_COLOR = "#D63028",
+    NODE_WIDTH = 30,
+    COLLAPSER = {
+      RADIUS: NODE_WIDTH / 2,
+      SPACING: 2
+    },
+    OUTER_MARGIN = 10,
+    MARGIN = {
+      TOP: 2 * (COLLAPSER.RADIUS + OUTER_MARGIN),
+      RIGHT: OUTER_MARGIN,
+      BOTTOM: OUTER_MARGIN,
+      LEFT: OUTER_MARGIN
+    },
+    TRANSITION_DURATION = 1000,
+    HEIGHT = dheight - MARGIN.TOP - MARGIN.BOTTOM,
+    WIDTH = dwidth - MARGIN.LEFT - MARGIN.RIGHT,
+    LAYOUT_INTERATIONS = 20,
+    REFRESH_INTERVAL = 7000;
+    // if(config){
+    //   if(config.getType)
+    //     getType = config.getType;
+    //   if(config && config.TYPES)
+    //     TYPES=config.TYPES;
+    //   if(config.TYPE_COLORS)
+    //     TYPE_COLORS=config.TYPE_COLORS;
+    //   if(config.TYPE_HIGHLIGHT_COLORS)
+    //     TYPE_HIGHLIGHT_COLORS = config.TYPE_HIGHLIGHT_COLORS;
+    // }
+  var formatNumber = function (d) {
+    var numberFormat = d3.format(",.0f"); // zero decimal places
+    return "£" + numberFormat(d);
   },
-  getType = function(node){return node.type;},
-  //TYPES =       ["Customer Segment","ProductCatalogue","ProductSpec","CustomerFacingServiceCatalogue","SecurityControl",   "CustomerFacingServiceSpecificationType", "CustomerFacingServiceSpecification", "ResourceFacingServiceCatalogue", "ResourceFacingServiceSpecification","ResourceFacingServiceSpecificationType"],
-  //TYPE_COLORS = ["#0000FF",         "#0000FF",          "#0000FF",   "#00FF00",                        "#00FF00",           "#00FF00",                  "#00FF00",                              "#FF0000",                            "#FF0000",                              "#FF0000"],
-  //TYPE_HIGHLIGHT_COLORS = ["#0000AA", "#0000AA",        "#00AA00",   "#00AA00",                        "#00AA00",            "#00AA00",                              "#AA0000",                             "#AA0000"],
-  LINK_COLOR = "#b3b3b3",
-  INFLOW_COLOR = "#2E86D1",
-  OUTFLOW_COLOR = "#D63028",
-  NODE_WIDTH = 30,
-  COLLAPSER = {
-    RADIUS: NODE_WIDTH / 2,
-    SPACING: 2
+
+  formatFlow = function (d) {
+    var flowFormat = d3.format(",.0f"); // zero decimal places with sign
+    return flowFormat(Math.abs(d));
   },
-  OUTER_MARGIN = 10,
-  MARGIN = {
-    TOP: 2 * (COLLAPSER.RADIUS + OUTER_MARGIN),
-    RIGHT: OUTER_MARGIN,
-    BOTTOM: OUTER_MARGIN,
-    LEFT: OUTER_MARGIN
+
+  // Used when temporarily disabling user interractions to allow animations to complete
+  disableUserInterractions = function (time) {
+    isTransitioning = true;
+    setTimeout(function(){
+      isTransitioning = false;
+    }, time);
   },
-  TRANSITION_DURATION = 1000,
-  HEIGHT = dheight - MARGIN.TOP - MARGIN.BOTTOM,
-  WIDTH = dwidth - MARGIN.LEFT - MARGIN.RIGHT,
-  LAYOUT_INTERATIONS = 20,
-  REFRESH_INTERVAL = 7000;
-  // if(config){
-  //   if(config.getType)
-  //     getType = config.getType;
-  //   if(config && config.TYPES)
-  //     TYPES=config.TYPES;
-  //   if(config.TYPE_COLORS)
-  //     TYPE_COLORS=config.TYPE_COLORS;
-  //   if(config.TYPE_HIGHLIGHT_COLORS)
-  //     TYPE_HIGHLIGHT_COLORS = config.TYPE_HIGHLIGHT_COLORS;
-  // }
-var formatNumber = function (d) {
-  var numberFormat = d3.format(",.0f"); // zero decimal places
-  return "£" + numberFormat(d);
-},
 
-formatFlow = function (d) {
-  var flowFormat = d3.format(",.0f"); // zero decimal places with sign
-  return flowFormat(Math.abs(d));
-},
-
-// Used when temporarily disabling user interractions to allow animations to complete
-disableUserInterractions = function (time) {
-  isTransitioning = true;
-  setTimeout(function(){
-    isTransitioning = false;
-  }, time);
-},
-
-hideTooltip = function () {
-  return tooltip.transition()
-    .duration(TRANSITION_DURATION)
-    .style("opacity", 0);
-},
-
-showTooltip = function () {
-  tooltip
-    .style("left", d3.event.pageX + "px")
-    .style("top", d3.event.pageY + 15 + "px")
-    .transition()
+  hideTooltip = function () {
+    return tooltip.transition()
       .duration(TRANSITION_DURATION)
-      .style("opacity", 1);
-    return tooltip;
-};
+      .style("opacity", 0);
+  },
 
-colorScale = d3.scaleOrdinal().domain(config.TYPES).range(config.TYPE_COLORS);
-
-highlightColorScale = d3.scaleOrdinal().domain(config.TYPES).range(config.TYPE_HIGHLIGHT_COLORS);
-
-
-
-// svg.on("mousemove", mousemove)
-//     .on("mousedown", mousedown)
-//     .on("mouseup", mouseup);
-//
-//     function mousemove(){
-//       console.log("move");
-//     }
-//
-//
-//     function mousedown(){
-//       console.log("down");
-//     }
-//
-//     function mouseup(){
-//       console.log("up");
-//     }
-
-
-var  dragging=false;
-d3.select(window)
-     .on('keydown', function() {
-       if(d3.event.keyCode === 17)
-        dragging=true
-     })
-     .on('keyup', function(){
-       dragging = false;
-       });
-
-svg = d3.select("#chart").append("svg")
-        .attr("width", WIDTH + MARGIN.LEFT + MARGIN.RIGHT)
-        .attr("height", HEIGHT + MARGIN.TOP + MARGIN.BOTTOM)
-      .append("g")
-        .attr("transform", "translate(" + MARGIN.LEFT + "," + MARGIN.TOP + ")");
-
-svg.append("g").attr("id", "links");
-svg.append("g").attr("id", "nodes");
-svg.append("g").attr("id", "collapsers");
-
-tooltip = d3.select("#chart").append("div").attr("id", "tooltip");
-
-tooltip.style("opacity", 1)
-    .append("p")
-      .attr("class", "value");
-
-biHiSankey = d3.biHiSankey();
-
-// Set the biHiSankey diagram properties
-biHiSankey
-  .nodeWidth(NODE_WIDTH)
-  .nodeSpacing(7)
-  .linkSpacing(2)
-  .arrowheadScaleFactor(0.5) // Specifies that 0.5 of the link's stroke WIDTH should be allowed for the marker at the end of the link.
-  .size([WIDTH, HEIGHT]);
-
-path = biHiSankey.link().curvature(0.45);
-
-defs = svg.append("defs");
-
-defs.append("marker")
-  .style("fill", LINK_COLOR)
-  .attr("id", "arrowHead")
-  .attr("viewBox", "0 0 6 10")
-  .attr("refX", "1")
-  .attr("refY", "5")
-  .attr("markerUnits", "strokeWidth")
-  .attr("markerWidth", "1")
-  .attr("markerHeight", "1")
-  .attr("orient", "auto")
-  .append("path")
-    .attr("d", "M 0 0 L 1 0 L 6 5 L 1 10 L 0 10 z");
-
-defs.append("marker")
-  .style("fill", OUTFLOW_COLOR)
-  .attr("id", "arrowHeadInflow")
-  .attr("viewBox", "0 0 6 10")
-  .attr("refX", "1")
-  .attr("refY", "5")
-  .attr("markerUnits", "strokeWidth")
-  .attr("markerWidth", "1")
-  .attr("markerHeight", "1")
-  .attr("orient", "auto")
-  .append("path")
-    .attr("d", "M 0 0 L 1 0 L 6 5 L 1 10 L 0 10 z");
-
-defs.append("marker")
-  .style("fill", INFLOW_COLOR)
-  .attr("id", "arrowHeadOutlow")
-  .attr("viewBox", "0 0 6 10")
-  .attr("refX", "1")
-  .attr("refY", "5")
-  .attr("markerUnits", "strokeWidth")
-  .attr("markerWidth", "1")
-  .attr("markerHeight", "1")
-  .attr("orient", "auto")
-  .append("path")
-    .attr("d", "M 0 0 L 1 0 L 6 5 L 1 10 L 0 10 z");
-
-function update () {
-  var link, linkEnter, node, nodeEnter, collapser, collapserEnter;
-
-  function dragmove(node) {
-    if(!dragging)
-      return;
-
-    node.x = Math.max(0, Math.min(WIDTH - node.width, d3.event.x));
-    node.y = Math.max(0, Math.min(HEIGHT - node.height, d3.event.y));
-    d3.select(this).attr("transform", "translate(" + node.x + "," + node.y + ")");
-    biHiSankey.relayout();
-    svg.selectAll(".node").selectAll("rect").attr("height", function (d) { return d.height; });
-    link.attr("d", path);
-  }
-
-  function containChildren(node) {
-    node.children.forEach(function (child) {
-      child.state = "contained";
-      child.parent = this;
-      child._parent = null;
-      containChildren(child);
-    }, node);
-  }
-
-  function expand(node) {
-    node.state = "expanded";
-    node.children.forEach(function (child) {
-      child.state = "collapsed";
-      child._parent = this;
-      child.parent = null;
-      containChildren(child);
-    }, node);
-  }
-
-  function collapse(node) {
-    node.state = "collapsed";
-    containChildren(node);
-  }
-
-  function restoreLinksAndNodes() {
-    link
-      .style("stroke", LINK_COLOR)
-      .style("marker-end", function () { return 'url(#arrowHead)'; })
+  showTooltip = function () {
+    tooltip
+      .style("left", d3.event.pageX + "px")
+      .style("top", d3.event.pageY + 15 + "px")
       .transition()
         .duration(TRANSITION_DURATION)
+        .style("opacity", 1);
+      return tooltip;
+  };
+
+  colorScale = d3.scaleOrdinal().domain(config.TYPES).range(config.TYPE_COLORS);
+
+  highlightColorScale = d3.scaleOrdinal().domain(config.TYPES).range(config.TYPE_HIGHLIGHT_COLORS);
+
+
+
+  // svg.on("mousemove", mousemove)
+  //     .on("mousedown", mousedown)
+  //     .on("mouseup", mouseup);
+  //
+  //     function mousemove(){
+  //       console.log("move");
+  //     }
+  //
+  //
+  //     function mousedown(){
+  //       console.log("down");
+  //     }
+  //
+  //     function mouseup(){
+  //       console.log("up");
+  //     }
+
+
+  var  dragging=false;
+  d3.select(window)
+       .on('keydown', function() {
+         if(d3.event.keyCode === 17)
+          dragging=true
+       })
+       .on('keyup', function(){
+         dragging = false;
+         });
+
+  svg = d3.select("#chart").append("svg")
+          .attr("width", WIDTH + MARGIN.LEFT + MARGIN.RIGHT)
+          .attr("height", HEIGHT + MARGIN.TOP + MARGIN.BOTTOM)
+        .append("g")
+          .attr("transform", "translate(" + MARGIN.LEFT + "," + MARGIN.TOP + ")");
+
+  svg.append("g").attr("id", "links");
+  svg.append("g").attr("id", "nodes");
+  svg.append("g").attr("id", "collapsers");
+
+  tooltip = d3.select("#chart").append("div").attr("id", "tooltip");
+
+  tooltip.style("opacity", 1)
+      .append("p")
+        .attr("class", "value");
+
+  biHiSankey = sankey();
+
+  // Set the biHiSankey diagram properties
+  biHiSankey
+    .nodeWidth(NODE_WIDTH)
+    .nodeSpacing(7)
+    .linkSpacing(2)
+    .arrowheadScaleFactor(0.5) // Specifies that 0.5 of the link's stroke WIDTH should be allowed for the marker at the end of the link.
+    .size([WIDTH, HEIGHT]);
+
+  path = biHiSankey.link().curvature(0.45);
+
+  defs = svg.append("defs");
+
+  defs.append("marker")
+    .style("fill", LINK_COLOR)
+    .attr("id", "arrowHead")
+    .attr("viewBox", "0 0 6 10")
+    .attr("refX", "1")
+    .attr("refY", "5")
+    .attr("markerUnits", "strokeWidth")
+    .attr("markerWidth", "1")
+    .attr("markerHeight", "1")
+    .attr("orient", "auto")
+    .append("path")
+      .attr("d", "M 0 0 L 1 0 L 6 5 L 1 10 L 0 10 z");
+
+  defs.append("marker")
+    .style("fill", OUTFLOW_COLOR)
+    .attr("id", "arrowHeadInflow")
+    .attr("viewBox", "0 0 6 10")
+    .attr("refX", "1")
+    .attr("refY", "5")
+    .attr("markerUnits", "strokeWidth")
+    .attr("markerWidth", "1")
+    .attr("markerHeight", "1")
+    .attr("orient", "auto")
+    .append("path")
+      .attr("d", "M 0 0 L 1 0 L 6 5 L 1 10 L 0 10 z");
+
+  defs.append("marker")
+    .style("fill", INFLOW_COLOR)
+    .attr("id", "arrowHeadOutlow")
+    .attr("viewBox", "0 0 6 10")
+    .attr("refX", "1")
+    .attr("refY", "5")
+    .attr("markerUnits", "strokeWidth")
+    .attr("markerWidth", "1")
+    .attr("markerHeight", "1")
+    .attr("orient", "auto")
+    .append("path")
+      .attr("d", "M 0 0 L 1 0 L 6 5 L 1 10 L 0 10 z");
+
+  function update () {
+    var link, linkEnter, node, nodeEnter, collapser, collapserEnter;
+
+    function dragmove(node) {
+      if(!dragging)
+        return;
+
+      node.x = Math.max(0, Math.min(WIDTH - node.width, d3.event.x));
+      node.y = Math.max(0, Math.min(HEIGHT - node.height, d3.event.y));
+      d3.select(this).attr("transform", "translate(" + node.x + "," + node.y + ")");
+      biHiSankey.relayout();
+      svg.selectAll(".node").selectAll("rect").attr("height", function (d) { return d.height; });
+      link.attr("d", path);
+    }
+
+    function containChildren(node) {
+      node.children.forEach(function (child) {
+        child.state = "contained";
+        child.parent = this;
+        child._parent = null;
+        containChildren(child);
+      }, node);
+    }
+
+    function expand(node) {
+      node.state = "expanded";
+      node.children.forEach(function (child) {
+        child.state = "collapsed";
+        child._parent = this;
+        child.parent = null;
+        containChildren(child);
+      }, node);
+    }
+
+    function collapse(node) {
+      node.state = "collapsed";
+      containChildren(node);
+    }
+
+    function restoreLinksAndNodes() {
+      link
+        .style("stroke", LINK_COLOR)
+        .style("marker-end", function () { return 'url(#arrowHead)'; })
+        .transition()
+          .duration(TRANSITION_DURATION)
+          .style("opacity", OPACITY.LINK_DEFAULT);
+
+      node
+        .selectAll("rect")
+          .style("fill", function (d) {
+            var t = config.getType(d).replace(/ /g, "")
+            d.color = colorScale(t);
+            return d.color;
+          })
+          .style("stroke", function (d) {
+            return d3.rgb(colorScale(config.getType(d).replace(/ /g, ""))).darker(0.1);
+          })
+          .style("fill-opacity", OPACITY.NODE_DEFAULT);
+
+      node.filter(function (n) { return n.state === "collapsed"; })
+        .transition()
+          .duration(TRANSITION_DURATION)
+          .style("opacity", OPACITY.NODE_DEFAULT);
+    }
+
+    function showHideChildren(node) {
+      disableUserInterractions(2 * TRANSITION_DURATION);
+      hideTooltip();
+      if (node.state === "collapsed") { expand(node); }
+      else { collapse(node); }
+
+      restoreLinksAndNodes();
+      biHiSankey.relayout();
+      update();
+      update();
+      link.attr("d", path);
+
+    }
+
+    function highlightConnected(g) {
+      link.filter(function (d) { return d.source === g; })
+        .style("marker-end", function () { return 'url(#arrowHeadInflow)'; })
+        .style("stroke", OUTFLOW_COLOR)
         .style("opacity", OPACITY.LINK_DEFAULT);
 
-    node
-      .selectAll("rect")
-        .style("fill", function (d) {
-          var t = config.getType(d).replace(/ /g, "")
-          d.color = colorScale(t);
-          return d.color;
-        })
-        .style("stroke", function (d) {
-          return d3.rgb(colorScale(config.getType(d).replace(/ /g, ""))).darker(0.1);
-        })
-        .style("fill-opacity", OPACITY.NODE_DEFAULT);
-
-    node.filter(function (n) { return n.state === "collapsed"; })
-      .transition()
-        .duration(TRANSITION_DURATION)
-        .style("opacity", OPACITY.NODE_DEFAULT);
-  }
-
-  function showHideChildren(node) {
-    disableUserInterractions(2 * TRANSITION_DURATION);
-    hideTooltip();
-    if (node.state === "collapsed") { expand(node); }
-    else { collapse(node); }
-
-    restoreLinksAndNodes();
-    biHiSankey.relayout();
-    update();
-    update();
-    link.attr("d", path);
-
-  }
-
-  function highlightConnected(g) {
-    link.filter(function (d) { return d.source === g; })
-      .style("marker-end", function () { return 'url(#arrowHeadInflow)'; })
-      .style("stroke", OUTFLOW_COLOR)
-      .style("opacity", OPACITY.LINK_DEFAULT);
-
-    link.filter(function (d) { return d.target === g; })
-      .style("marker-end", function () { return 'url(#arrowHeadOutlow)'; })
-      .style("stroke", INFLOW_COLOR)
-      .style("opacity", OPACITY.LINK_DEFAULT);
-  }
-
-  function fadeUnconnected(g) {
-    link.filter(function (d) { return d.source !== g && d.target !== g; })
-      .style("marker-end", function () { return 'url(#arrowHead)'; })
-      .transition()
-        .duration(TRANSITION_DURATION)
-        .style("opacity", OPACITY.LINK_FADED);
-
-    node.filter(function (d) {
-      return (d.name === g.name) ? false : !biHiSankey.connected(d, g);
-    }).transition()
-      .duration(TRANSITION_DURATION)
-      .style("opacity", OPACITY.NODE_FADED);
-  }
-
-  link = svg.select("#links").selectAll("path.link")
-    .data(biHiSankey.visibleLinks(), function (d) { return d.id; });
-
-  link.style("stroke-WIDTH", function (d) {
-      return Math.max(1, d.thickness); })
-
-  link.transition()
-    .duration(TRANSITION_DURATION)
-    .style("stroke-WIDTH", function (d) {
-      return Math.max(1, d.thickness); })
-    .attr("d", path)
-    .style("opacity", OPACITY.LINK_DEFAULT);
-
-
-  link.exit().remove();
-
-
-  linkEnter = link.enter().append("path")
-    .attr("class", "link")
-    .style("fill", "none");
-
-  linkEnter.on('mouseenter', function (d) {
-    if (!isTransitioning) {
-      var v =showTooltip().select(".value");
-      v.selectAll("*").remove();
-      v.append("div").text(function () {
-        if (d.direction > 0) {
-          //return d.source.name + " consumes " + d.target.name + "\n" + formatNumber(d.value);
-          return d.source.name + " -> " + d.target.name;
-        }
-        //return d.target.name + " consumes" + d.source.name + "\n" + formatNumber(d.value);
-        return d.source.name + " -> " + d.target.name;
-      });
-
-      d3.select(this)
-        .style("stroke", LINK_COLOR)
-        .transition()
-          .duration(TRANSITION_DURATION / 2)
-          .style("opacity", OPACITY.LINK_HIGHLIGHT);
+      link.filter(function (d) { return d.target === g; })
+        .style("marker-end", function () { return 'url(#arrowHeadOutlow)'; })
+        .style("stroke", INFLOW_COLOR)
+        .style("opacity", OPACITY.LINK_DEFAULT);
     }
-  });
 
-  linkEnter.on('mouseleave', function () {
-    if (!isTransitioning) {
-      hideTooltip();
-
-      d3.select(this)
-        .style("stroke", LINK_COLOR)
+    function fadeUnconnected(g) {
+      link.filter(function (d) { return d.source !== g && d.target !== g; })
+        .style("marker-end", function () { return 'url(#arrowHead)'; })
         .transition()
-          .duration(TRANSITION_DURATION / 2)
-          .style("opacity", OPACITY.LINK_DEFAULT);
-    }
-  });
+          .duration(TRANSITION_DURATION)
+          .style("opacity", OPACITY.LINK_FADED);
 
-  linkEnter.sort(function (a, b) { return b.thickness - a.thickness; })
-    .classed("leftToRight", function (d) {
-      return d.direction > 0;
-    })
-    .classed("rightToLeft", function (d) {
-      return d.direction < 0;
-    })
-    .style("marker-end", function () {
-      return 'url(#arrowHead)';
-    })
-    .style("stroke", LINK_COLOR)
-    .style("opacity", 0)
-    .transition()
-      .delay(TRANSITION_DURATION)
+      node.filter(function (d) {
+        return (d.name === g.name) ? false : !biHiSankey.connected(d, g);
+      }).transition()
+        .duration(TRANSITION_DURATION)
+        .style("opacity", OPACITY.NODE_FADED);
+    }
+
+    link = svg.select("#links").selectAll("path.link")
+      .data(biHiSankey.visibleLinks(), function (d) { return d.id; });
+
+    link.style("stroke-WIDTH", function (d) {
+        return Math.max(1, d.thickness); })
+
+    link.transition()
       .duration(TRANSITION_DURATION)
-      .attr("d", path)
       .style("stroke-WIDTH", function (d) {
         return Math.max(1, d.thickness); })
+      .attr("d", path)
       .style("opacity", OPACITY.LINK_DEFAULT);
 
 
-  node = svg.select("#nodes").selectAll(".node")
-      .data(biHiSankey.collapsedNodes(), function (d) { return d.id; });
+    link.exit().remove();
 
 
-  node.transition()
-    .duration(TRANSITION_DURATION)
-    .attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; })
-    .style("opacity", OPACITY.NODE_DEFAULT)
-    .select("rect")
+    linkEnter = link.enter().append("path")
+      .attr("class", "link")
+      .style("fill", "none");
+
+    linkEnter.on('mouseenter', function (d) {
+      if (!isTransitioning) {
+        var v =showTooltip().select(".value");
+        v.selectAll("*").remove();
+        v.append("div").text(function () {
+          if (d.direction > 0) {
+            //return d.source.name + " consumes " + d.target.name + "\n" + formatNumber(d.value);
+            return d.source.name + " -> " + d.target.name;
+          }
+          //return d.target.name + " consumes" + d.source.name + "\n" + formatNumber(d.value);
+          return d.source.name + " -> " + d.target.name;
+        });
+
+        d3.select(this)
+          .style("stroke", LINK_COLOR)
+          .transition()
+            .duration(TRANSITION_DURATION / 2)
+            .style("opacity", OPACITY.LINK_HIGHLIGHT);
+      }
+    });
+
+    linkEnter.on('mouseleave', function () {
+      if (!isTransitioning) {
+        hideTooltip();
+
+        d3.select(this)
+          .style("stroke", LINK_COLOR)
+          .transition()
+            .duration(TRANSITION_DURATION / 2)
+            .style("opacity", OPACITY.LINK_DEFAULT);
+      }
+    });
+
+    linkEnter.sort(function (a, b) { return b.thickness - a.thickness; })
+      .classed("leftToRight", function (d) {
+        return d.direction > 0;
+      })
+      .classed("rightToLeft", function (d) {
+        return d.direction < 0;
+      })
+      .style("marker-end", function () {
+        return 'url(#arrowHead)';
+      })
+      .style("stroke", LINK_COLOR)
+      .style("opacity", 0)
+      .transition()
+        .delay(TRANSITION_DURATION)
+        .duration(TRANSITION_DURATION)
+        .attr("d", path)
+        .style("stroke-WIDTH", function (d) {
+          return Math.max(1, d.thickness); })
+        .style("opacity", OPACITY.LINK_DEFAULT);
+
+
+    node = svg.select("#nodes").selectAll(".node")
+        .data(biHiSankey.collapsedNodes(), function (d) { return d.id; });
+
+
+    node.transition()
+      .duration(TRANSITION_DURATION)
+      .attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; })
+      .style("opacity", OPACITY.NODE_DEFAULT)
+      .select("rect")
+        .style("fill", function (d) {
+          d.color = colorScale(config.getType(d).replace(/ /g, ""));
+          return d.color;
+        })
+        .style("stroke", function (d) { return d3.rgb(colorScale(config.getType(d).replace(/ /g, ""))).darker(0.1); })
+        .style("stroke-WIDTH", "1px")
+        .attr("height", function (d) {
+          return d.height<1 ? 1 : d.height; })
+        .attr("width", biHiSankey.nodeWidth());
+
+
+    node.exit()
+      .transition()
+        .duration(TRANSITION_DURATION)
+        .attr("transform", function (d) {
+          var collapsedAncestor, endX, endY;
+          collapsedAncestor = d.ancestors.filter(function (a) {
+            return a.state === "collapsed";
+          })[0];
+          endX = collapsedAncestor ? collapsedAncestor.x : d.x;
+          endY = collapsedAncestor ? collapsedAncestor.y : d.y;
+          return "translate(" + endX + "," + endY + ")";
+        })
+        .remove();
+
+
+    nodeEnter = node.enter().append("g").attr("class", "node");
+
+    nodeEnter
+      .attr("transform", function (d) {
+        var startX = d._parent ? d._parent.x : d.x,
+            startY = d._parent ? d._parent.y : d.y;
+        return "translate(" + startX + "," + startY + ")";
+      })
+      .style("opacity", 1e-6)
+      .transition()
+        .duration(TRANSITION_DURATION)
+        .style("opacity", OPACITY.NODE_DEFAULT)
+        .attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+    nodeEnter.append("text")
+    // .text(function (d) {
+    //   return d.name; })
+    //       .attr("x", -6)
+    //       .attr("y", function (d) { return d.height / 2; })
+    //       .attr("dy", ".35em")
+    //       .attr("text-anchor", "end")
+    //       .attr("transform", null)
+
+    nodeEnter.append("rect")
       .style("fill", function (d) {
-        d.color = colorScale(config.getType(d).replace(/ /g, ""));
+        var t = config.getType(d).replace(/ /g, "");
+        d.color = colorScale(t);
         return d.color;
       })
-      .style("stroke", function (d) { return d3.rgb(colorScale(config.getType(d).replace(/ /g, ""))).darker(0.1); })
+      .style("stroke", function (d) {
+        return d3.rgb(colorScale(config.getType(d).replace(/ /g, ""))).darker(0.1);
+      })
       .style("stroke-WIDTH", "1px")
       .attr("height", function (d) {
-        return d.height<1 ? 1 : d.height; })
-      .attr("width", biHiSankey.nodeWidth());
+        return d.height; })
+      .attr("width", biHiSankey.nodeWidth())
 
 
-  node.exit()
-    .transition()
-      .duration(TRANSITION_DURATION)
-      .attr("transform", function (d) {
-        var collapsedAncestor, endX, endY;
-        collapsedAncestor = d.ancestors.filter(function (a) {
-          return a.state === "collapsed";
-        })[0];
-        endX = collapsedAncestor ? collapsedAncestor.x : d.x;
-        endY = collapsedAncestor ? collapsedAncestor.y : d.y;
-        return "translate(" + endX + "," + endY + ")";
-      })
-      .remove();
 
+      // nodeEnter.append("a")
+      //   .attr("xlink:href", function (d) {
+      //       return "#"+d.id
+      //     })
+      //     append("text")
+      //     append("foobar");
 
-  nodeEnter = node.enter().append("g").attr("class", "node");
-
-  nodeEnter
-    .attr("transform", function (d) {
-      var startX = d._parent ? d._parent.x : d.x,
-          startY = d._parent ? d._parent.y : d.y;
-      return "translate(" + startX + "," + startY + ")";
-    })
-    .style("opacity", 1e-6)
-    .transition()
-      .duration(TRANSITION_DURATION)
-      .style("opacity", OPACITY.NODE_DEFAULT)
-      .attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; });
-
-  nodeEnter.append("text")
-  // .text(function (d) {
-  //   return d.name; })
-  //       .attr("x", -6)
-  //       .attr("y", function (d) { return d.height / 2; })
-  //       .attr("dy", ".35em")
-  //       .attr("text-anchor", "end")
-  //       .attr("transform", null)
-
-  nodeEnter.append("rect")
-    .style("fill", function (d) {
-      var t = config.getType(d).replace(/ /g, "");
-      d.color = colorScale(t);
-      return d.color;
-    })
-    .style("stroke", function (d) {
-      return d3.rgb(colorScale(config.getType(d).replace(/ /g, ""))).darker(0.1);
-    })
-    .style("stroke-WIDTH", "1px")
-    .attr("height", function (d) {
-      return d.height; })
-    .attr("width", biHiSankey.nodeWidth())
-
-
+    // nodeEnter.append("image")
+    //   .style("stroke", function (d) {
+    //       return d3.rgb(colorScale(d.type.replace(/ .*/, ""))).darker(0.1);
+    //     })
+    //   .style("stroke-WIDTH", "1px")
+    //   .attr("xlink:href",function(d){
+    //     return "#"+d.id
+    //   })
+    //   .attr("height", function (d) { return d.height; })
+    //   .attr("width", biHiSankey.nodeWidth());
 
     // nodeEnter.append("a")
     //   .attr("xlink:href", function (d) {
     //       return "#"+d.id
     //     })
-    //     append("text")
-    //     append("foobar");
+    //   .append("text")
+    //   .attr("transform","translate(30,0)").text(function(){
+    //     return "test";
+    //   });
 
-  // nodeEnter.append("image")
-  //   .style("stroke", function (d) {
-  //       return d3.rgb(colorScale(d.type.replace(/ .*/, ""))).darker(0.1);
-  //     })
-  //   .style("stroke-WIDTH", "1px")
-  //   .attr("xlink:href",function(d){
-  //     return "#"+d.id
-  //   })
-  //   .attr("height", function (d) { return d.height; })
-  //   .attr("width", biHiSankey.nodeWidth());
-
-  // nodeEnter.append("a")
-  //   .attr("xlink:href", function (d) {
-  //       return "#"+d.id
-  //     })
-  //   .append("text")
-  //   .attr("transform","translate(30,0)").text(function(){
-  //     return "test";
-  //   });
-
-  node.on("click", function(node){
-     if(dragging)
-      window.location = "#"+ node.id;
-  });
-
-  node.on("mouseenter", function (g) {
-    if (!isTransitioning) {
-      restoreLinksAndNodes();
-      highlightConnected(g);
-      fadeUnconnected(g);
-
-      d3.select(this).select("rect")
-        .style("fill", function (d) {
-          //d.color = d.netFlow > 0 ? INFLOW_COLOR : OUTFLOW_COLOR;
-          var c = config.getType(g);
-          d.color = highlightColorScale(c.replace(/ /g, ""));
-          return d.color;
-        })
-        .style("stroke", function (d) {
-          return d3.rgb(d.color).darker(0.5);
-        })
-        .style("fill-opacity", OPACITY.LINK_DEFAULT);
-
-        config.getNodeToolip(showTooltip().select(".value"),g);
-
-      // tooltip
-      //   .style("left", g.x + MARGIN.LEFT + "px")
-      //   .style("top", g.y + g.height + MARGIN.TOP + 15 + "px")
-      //   .transition()
-      //     .duration(TRANSITION_DURATION)
-      //     .style("opacity", 1).select(".value")
-      //     .text(function () {
-      //       var additionalInstructions = g.children.length ? "\n\n(Double click to expand)" : "";
-      //       //return g.name + "\nNet flow: " + g.netFlow + additionalInstructions;
-      //       return "(Ctl click to navigate)";
-      //     });
-    }
-  });
-
-  node.on("mouseleave", function () {
-    if (!isTransitioning) {
-      hideTooltip();
-      restoreLinksAndNodes();
-    }
-  });
-
-  node.filter(function (d) { return d.children.length; })
-    .on("dblclick", showHideChildren);
-
-
-  // allow nodes to be dragged to new positions
-  node.call(d3.drag()
-    .subject(function (d) { return d; })
-    .on("start", function () { this.parentNode.appendChild(this); })
-    .on("drag", dragmove ));
-
-  // add in the text for the nodes
-  node.filter(function (d) { return d.value !== 0; })
-    .select("text")
-      .attr("x", -6)
-      .attr("y", function (d) { return d.height / 2; })
-      .attr("dy", ".35em")
-      .attr("text-anchor", "end")
-      .attr("transform", null)
-      .text(function (d) { return d.name; })
-    .filter(function (d) { return d.x < WIDTH / 2; })
-      .attr("x", 6 + biHiSankey.nodeWidth())
-      .attr("text-anchor", "start");
-
-
-  collapser = svg.select("#collapsers").selectAll(".collapser")
-    .data(biHiSankey.expandedNodes(), function (d) { return d.id; });
-
-
-  collapserEnter = collapser.enter().append("g").attr("class", "collapser");
-
-  collapserEnter.append("circle")
-    .attr("r", COLLAPSER.RADIUS)
-    .style("fill", function (d) {
-      d.color = colorScale(config.getType(d).replace(/ /g, ""));
-      return d.color;
+    node.on("click", function(node){
+       if(dragging)
+        window.location = "#"+ node.id;
     });
 
-  collapserEnter
-    .style("opacity", OPACITY.NODE_DEFAULT)
-    .attr("transform", function (d) {
-      return "translate(" + (d.x + d.width / 2) + "," + (COLLAPSER.RADIUS) + ")";
+    node.on("mouseenter", function (g) {
+      if (!isTransitioning) {
+        restoreLinksAndNodes();
+        highlightConnected(g);
+        fadeUnconnected(g);
+
+        d3.select(this).select("rect")
+          .style("fill", function (d) {
+            //d.color = d.netFlow > 0 ? INFLOW_COLOR : OUTFLOW_COLOR;
+            var c = config.getType(g);
+            d.color = highlightColorScale(c.replace(/ /g, ""));
+            return d.color;
+          })
+          .style("stroke", function (d) {
+            return d3.rgb(d.color).darker(0.5);
+          })
+          .style("fill-opacity", OPACITY.LINK_DEFAULT);
+
+          config.getNodeToolip(showTooltip().select(".value"),g);
+
+        // tooltip
+        //   .style("left", g.x + MARGIN.LEFT + "px")
+        //   .style("top", g.y + g.height + MARGIN.TOP + 15 + "px")
+        //   .transition()
+        //     .duration(TRANSITION_DURATION)
+        //     .style("opacity", 1).select(".value")
+        //     .text(function () {
+        //       var additionalInstructions = g.children.length ? "\n\n(Double click to expand)" : "";
+        //       //return g.name + "\nNet flow: " + g.netFlow + additionalInstructions;
+        //       return "(Ctl click to navigate)";
+        //     });
+      }
     });
 
-  collapserEnter.on("dblclick", showHideChildren);
-
-  collapser.select("circle")
-    .attr("r", COLLAPSER.RADIUS);
-
-  collapser.transition()
-    .delay(TRANSITION_DURATION)
-    .duration(TRANSITION_DURATION)
-    .attr("transform", function (d, i) {
-      return "translate("
-        + (COLLAPSER.RADIUS + i * 2 * (COLLAPSER.RADIUS + COLLAPSER.SPACING))
-        + ","
-        + (-COLLAPSER.RADIUS - OUTER_MARGIN)
-        + ")";
+    node.on("mouseleave", function () {
+      if (!isTransitioning) {
+        hideTooltip();
+        restoreLinksAndNodes();
+      }
     });
 
-  collapser.on("mouseenter", function (g) {
-    if (!isTransitioning) {
-      var v = showTooltip().select(".value");
-      v.selectAll("*").remove();
-      v.append("div").text(function () {
-          return g.name + "\n"+ g.type+"\n(Double click to collapse)";
-        });
+    node.filter(function (d) { return d.children.length; })
+      .on("dblclick", showHideChildren);
 
-      var c = config.getType(g);
-      var highlightColor = highlightColorScale(c.replace(/ /g, ""));
 
-      d3.select(this)
-        .style("opacity", OPACITY.NODE_HIGHLIGHT)
-        .select("circle")
-          .style("fill", highlightColor);
+    // allow nodes to be dragged to new positions
+    node.call(d3.drag()
+      .subject(function (d) { return d; })
+      .on("start", function () { this.parentNode.appendChild(this); })
+      .on("drag", dragmove ));
 
-      node.filter(function (d) {
-        return d.ancestors.indexOf(g) >= 0;
-      }).style("opacity", OPACITY.NODE_HIGHLIGHT)
-        .select("rect")
-          .style("fill", highlightColor);
-    }
-  });
+    // add in the text for the nodes
+    node.filter(function (d) { return d.value !== 0; })
+      .select("text")
+        .attr("x", -6)
+        .attr("y", function (d) { return d.height / 2; })
+        .attr("dy", ".35em")
+        .attr("text-anchor", "end")
+        .attr("transform", null)
+        .text(function (d) { return d.name; })
+      .filter(function (d) { return d.x < WIDTH / 2; })
+        .attr("x", 6 + biHiSankey.nodeWidth())
+        .attr("text-anchor", "start");
 
-  collapser.on("mouseleave", function (g) {
-    if (!isTransitioning) {
-      hideTooltip();
-      d3.select(this)
-        .style("opacity", OPACITY.NODE_DEFAULT)
-        .select("circle")
-          .style("fill", function (d) { return d.color; });
 
-      node.filter(function (d) {
-        return d.ancestors.indexOf(g) >= 0;
-      }).style("opacity", OPACITY.NODE_DEFAULT)
-        .select("rect")
-          .style("fill", function (d) { return d.color; });
-    }
-  });
+    collapser = svg.select("#collapsers").selectAll(".collapser")
+      .data(biHiSankey.expandedNodes(), function (d) { return d.id; });
 
-  collapser.exit().remove();
+
+    collapserEnter = collapser.enter().append("g").attr("class", "collapser");
+
+    collapserEnter.append("circle")
+      .attr("r", COLLAPSER.RADIUS)
+      .style("fill", function (d) {
+        d.color = colorScale(config.getType(d).replace(/ /g, ""));
+        return d.color;
+      });
+
+    collapserEnter
+      .style("opacity", OPACITY.NODE_DEFAULT)
+      .attr("transform", function (d) {
+        return "translate(" + (d.x + d.width / 2) + "," + (COLLAPSER.RADIUS) + ")";
+      });
+
+    collapserEnter.on("dblclick", showHideChildren);
+
+    collapser.select("circle")
+      .attr("r", COLLAPSER.RADIUS);
+
+    collapser.transition()
+      .delay(TRANSITION_DURATION)
+      .duration(TRANSITION_DURATION)
+      .attr("transform", function (d, i) {
+        return "translate("
+          + (COLLAPSER.RADIUS + i * 2 * (COLLAPSER.RADIUS + COLLAPSER.SPACING))
+          + ","
+          + (-COLLAPSER.RADIUS - OUTER_MARGIN)
+          + ")";
+      });
+
+    collapser.on("mouseenter", function (g) {
+      if (!isTransitioning) {
+        var v = showTooltip().select(".value");
+        v.selectAll("*").remove();
+        v.append("div").text(function () {
+            return g.name + "\n"+ g.type+"\n(Double click to collapse)";
+          });
+
+        var c = config.getType(g);
+        var highlightColor = highlightColorScale(c.replace(/ /g, ""));
+
+        d3.select(this)
+          .style("opacity", OPACITY.NODE_HIGHLIGHT)
+          .select("circle")
+            .style("fill", highlightColor);
+
+        node.filter(function (d) {
+          return d.ancestors.indexOf(g) >= 0;
+        }).style("opacity", OPACITY.NODE_HIGHLIGHT)
+          .select("rect")
+            .style("fill", highlightColor);
+      }
+    });
+
+    collapser.on("mouseleave", function (g) {
+      if (!isTransitioning) {
+        hideTooltip();
+        d3.select(this)
+          .style("opacity", OPACITY.NODE_DEFAULT)
+          .select("circle")
+            .style("fill", function (d) { return d.color; });
+
+        node.filter(function (d) {
+          return d.ancestors.indexOf(g) >= 0;
+        }).style("opacity", OPACITY.NODE_DEFAULT)
+          .select("rect")
+            .style("fill", function (d) { return d.color; });
+      }
+    });
+
+    collapser.exit().remove();
+
+  }
+
+  biHiSankey
+    .nodes(exampleNodes)
+    .links(exampleLinks)
+    .arrowheadScaleFactor(0.5)
+    .initializeNodes(function (node) {
+      //node.state = node.parent ? "contained" : "collapsed";
+      node.state = node.children.length > 0 ? "expanded" : "collapsed";
+      //node.state = "collapsed";
+    })
+    .layout(LAYOUT_INTERATIONS);
+
+  disableUserInterractions(2 * TRANSITION_DURATION);
+
+  update();
+  update();
 
 }
 
-biHiSankey
-  .nodes(exampleNodes)
-  .links(exampleLinks)
-  .arrowheadScaleFactor(0.5)
-  .initializeNodes(function (node) {
-    //node.state = node.parent ? "contained" : "collapsed";
-    node.state = node.children.length > 0 ? "expanded" : "collapsed";
-    //node.state = "collapsed";
-  })
-  .layout(LAYOUT_INTERATIONS);
-
-disableUserInterractions(2 * TRANSITION_DURATION);
-
-update();
-update();
-
-}
+module.exports=renderSankey

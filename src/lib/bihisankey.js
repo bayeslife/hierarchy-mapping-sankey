@@ -1,5 +1,10 @@
-d3.biHiSankey = function () {
+
+
+
+biHierarchicalSankey = function () {
   "use strict";
+
+  var d3 = require('d3');
 
   var biHiSankey = {},
     nodeWidth = 24,
@@ -731,3 +736,5 @@ d3.biHiSankey = function () {
 
   return biHiSankey;
 };
+
+module.exports = biHierarchicalSankey;
