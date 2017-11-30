@@ -1,0 +1,884 @@
+[
+  {
+    "source": "{5B637AB7-E57D-4bcc-8098-83CA300D7991}",
+    "sourcename": "Managed Mobility",
+    "target": "{9F04C680-3B4F-4fc8-8075-19023892E28C}",
+    "targetname": "Managed Mobile",
+    "value": 1
+  },
+  {
+    "source": "{35B9E918-C920-4539-85D8-7076EB00B723}",
+    "sourcename": "NON IAAS Centre Connect",
+    "target": "{D9421060-DFA5-4675-B7F9-21A0CFDB3109}",
+    "targetname": "Mobile Access Connectivity",
+    "value": 1
+  },
+  {
+    "source": "{51FBABBD-1A85-450d-A76E-B7C3123254FD}",
+    "sourcename": "Network Encryption",
+    "target": "{CF4CAD09-E060-474d-8B00-B703F9950A3B}",
+    "targetname": "WAN Core",
+    "value": 1
+  },
+  {
+    "source": "{37C1E49D-15E5-4364-A062-D1067CD4FB7A}",
+    "sourcename": "PSTN Calling",
+    "target": "{07F88E49-098E-4a72-8528-E17B84770809}",
+    "targetname": "PSTN Calling Service",
+    "value": 1
+  },
+  {
+    "source": "{F2C292E2-C1F5-4ac2-B020-DE38722DB4F7}",
+    "sourcename": "Port Security",
+    "target": "{7EFF582D-2756-4552-8534-23437C897CF2}",
+    "targetname": "LAN Port Configuration",
+    "value": 1
+  },
+  {
+    "source": "{B6BC83BA-A311-4453-83E8-CB92592DE192}",
+    "sourcename": "Quality of Service and Guaranteed Performance",
+    "target": "{59F49E48-5890-49a5-A9B9-046A1E2724C3}",
+    "targetname": "Fixed Access Connectivity",
+    "value": 1
+  },
+  {
+    "source": "{D58AEE85-964B-4183-927F-9022E7DF7945}",
+    "sourcename": "Rack Management",
+    "target": "{18789987-FC17-4b7c-9D0F-438C3482B0D0}",
+    "targetname": "Faciliates and Equipment Management",
+    "value": 1
+  },
+  {
+    "source": "{4E696E6C-6934-4f3f-B2BD-D5C47A512C1B}",
+    "sourcename": "Red Share for Government Voice Calling, SMS and Data",
+    "target": "{D9421060-DFA5-4675-B7F9-21A0CFDB3109}",
+    "targetname": "Mobile Access Connectivity",
+    "value": 1
+  },
+  {
+    "source": "{4E696E6C-6934-4f3f-B2BD-D5C47A512C1B}",
+    "sourcename": "Red Share for Government Voice Calling, SMS and Data",
+    "target": "{FD57AFFC-EE6E-478a-A1A2-264C873CF975}",
+    "targetname": "Usage Sharing",
+    "value": 1
+  },
+  {
+    "source": "{91B044F6-E56C-4685-B26A-02CE83A5DD3E}",
+    "sourcename": "Red Share for Government",
+    "target": "{D9421060-DFA5-4675-B7F9-21A0CFDB3109}",
+    "targetname": "Mobile Access Connectivity",
+    "value": 1
+  },
+  {
+    "source": "{91B044F6-E56C-4685-B26A-02CE83A5DD3E}",
+    "sourcename": "Red Share for Government",
+    "target": "{FD57AFFC-EE6E-478a-A1A2-264C873CF975}",
+    "targetname": "Usage Sharing",
+    "value": 1
+  },
+  {
+    "source": "{88AD8241-6160-4d13-BCC2-BE481A048243}",
+    "sourcename": "SIP Basic",
+    "target": "{DC6945C3-C936-425d-9F31-DAEC8B66E27D}",
+    "targetname": "SIP",
+    "value": 1
+  },
+  {
+    "source": "{17891F29-8230-4e2b-A554-35689A1D10A2}",
+    "sourcename": "SIP Standard",
+    "target": "{DC6945C3-C936-425d-9F31-DAEC8B66E27D}",
+    "targetname": "SIP",
+    "value": 1
+  },
+  {
+    "source": "{18698823-9075-4b39-9258-A47738EC88DB}",
+    "sourcename": "Standard Internet Plans",
+    "target": "{CF4CAD09-E060-474d-8B00-B703F9950A3B}",
+    "targetname": "WAN Core",
+    "value": 1
+  },
+  {
+    "source": "{37FC767E-1857-4ac6-90D8-7C2B3675EC53}",
+    "sourcename": "Standard Mobile Plan",
+    "target": "{AD56CCBD-15E4-4c1e-90D2-CFB4AAF6F581}",
+    "targetname": "Mobile Service",
+    "value": 1
+  },
+  {
+    "source": "{4CA09B04-EA67-4a47-AB59-C124AA90ACB3}",
+    "sourcename": "Structured Cabling",
+    "target": "{18789987-FC17-4b7c-9D0F-438C3482B0D0}",
+    "targetname": "Faciliates and Equipment Management",
+    "value": 1
+  },
+  {
+    "source": "{68DEB602-CDBE-44cc-8618-597406E6B89D}",
+    "sourcename": "Sure Spend",
+    "target": "{D9421060-DFA5-4675-B7F9-21A0CFDB3109}",
+    "targetname": "Mobile Access Connectivity",
+    "value": 1
+  },
+  {
+    "source": "{1CC579B6-9D49-48de-A543-EDD1604C1B31}",
+    "sourcename": "UPS",
+    "target": "{CBFE96D7-BEDB-455b-AAD2-A6844E40AF67}",
+    "targetname": "Selectable Power Module",
+    "value": 1
+  },
+  {
+    "source": "{C3D017B4-9040-4064-9EF5-CCBBF99DD54D}",
+    "sourcename": "Vodafone Managed Network Services",
+    "target": "{27DF6C8A-D97E-4724-A902-F4C94A239308}",
+    "targetname": "Managed WAN",
+    "value": 1
+  },
+  {
+    "source": "{C3D017B4-9040-4064-9EF5-CCBBF99DD54D}",
+    "sourcename": "Vodafone Managed Network Services",
+    "target": "{E6509D6C-B00B-49fa-9FC7-202885C38C8F}",
+    "targetname": "Managed WiFi",
+    "value": 1
+  },
+  {
+    "source": "{C3D017B4-9040-4064-9EF5-CCBBF99DD54D}",
+    "sourcename": "Vodafone Managed Network Services",
+    "target": "{7DD6D90F-6732-4709-88A3-BCAD6E375ACA}",
+    "targetname": "Managed LAN",
+    "value": 1
+  },
+  {
+    "source": "{C3D017B4-9040-4064-9EF5-CCBBF99DD54D}",
+    "sourcename": "Vodafone Managed Network Services",
+    "target": "{59F49E48-5890-49a5-A9B9-046A1E2724C3}",
+    "targetname": "Fixed Access Connectivity",
+    "value": 1
+  },
+  {
+    "source": "{5D6C1499-BD03-4b66-8FED-C06EDFE0D1A9}",
+    "sourcename": "3rd Party SIP Access Support",
+    "target": "{6EA02912-6BBC-424c-ACD7-54D9AF7B0BF8}",
+    "targetname": "SIP third party",
+    "value": 1
+  },
+  {
+    "source": "{EF649E07-C1DD-4e6c-B27E-E74324AF7513}",
+    "sourcename": "Additional skills and queue",
+    "target": "{5B974317-CB5C-472d-BB51-41E88467066D}",
+    "targetname": "Routing",
+    "value": 1
+  },
+  {
+    "source": "{DF2F4113-806F-4539-88AF-200A7021CBE8}",
+    "sourcename": "Advanced Email Routing",
+    "target": "{5B974317-CB5C-472d-BB51-41E88467066D}",
+    "targetname": "Routing",
+    "value": 1
+  },
+  {
+    "source": "{FBB30B4E-E1AC-461e-859F-9CF753E90C7D}",
+    "sourcename": "Advanced Email Routing",
+    "target": "{5B974317-CB5C-472d-BB51-41E88467066D}",
+    "targetname": "Routing",
+    "value": 1
+  },
+  {
+    "source": "{FBB30B4E-E1AC-461e-859F-9CF753E90C7D}",
+    "sourcename": "Advanced Email Routing",
+    "target": "{76883064-A5E5-4521-9A1D-E5590DD6D344}",
+    "targetname": "Email",
+    "value": 1
+  },
+  {
+    "source": "{50D3D782-FD26-4df9-BC35-562E3858EBFD}",
+    "sourcename": "Advanced SMS / Dialler",
+    "target": "{613552FD-EF1A-499b-BF4A-CC5B3B93144D}",
+    "targetname": "SMS and Routing",
+    "value": 1
+  },
+  {
+    "source": "{14DF281B-0F7B-4804-AB0D-DAFAEA47B7B6}",
+    "sourcename": "Advanced Survey\nMulti media and/or speech recognition\n",
+    "target": "{658C2751-DC20-4c93-B7B8-CB7B30C5135A}",
+    "targetname": "Survey",
+    "value": 1
+  },
+  {
+    "source": "{36859CAE-01D7-4b93-BA35-78B47C1DEBA1}",
+    "sourcename": "Advanced Web Chat and Co browsing",
+    "target": "{4261B7BA-B232-48a1-8F65-697C08A69EE9}",
+    "targetname": "Web Chat",
+    "value": 1
+  },
+  {
+    "source": "{E6F20888-704C-48cb-B27F-F018D8C29A72}",
+    "sourcename": "Advanced Web Chat and Co browsing",
+    "target": "{4261B7BA-B232-48a1-8F65-697C08A69EE9}",
+    "targetname": "Web Chat",
+    "value": 1
+  },
+  {
+    "source": "{E61CA579-E0EA-47eb-B375-B2507FA2821E}",
+    "sourcename": "Agent remote access to WFM",
+    "target": "{F7D566A1-77F3-4199-9537-AC080D01B4C0}",
+    "targetname": "Remote connectiviity",
+    "value": 1
+  },
+  {
+    "source": "{6FDCAE0E-293D-4842-92F7-91B7BC39BDEA}",
+    "sourcename": "Agent remote access",
+    "target": "{F7D566A1-77F3-4199-9537-AC080D01B4C0}",
+    "targetname": "Remote connectiviity",
+    "value": 1
+  },
+  {
+    "source": "{F347EAC7-6BE3-44af-BAD8-9FD5DEAD930E}",
+    "sourcename": "Archive to Agency Enterprise Storage",
+    "target": "{1EBB45DB-64D8-482e-A0C8-70C4537490FB}",
+    "targetname": "Call Recording",
+    "value": 1
+  },
+  {
+    "source": "{4D4F0855-1865-4e12-8452-A358442E8389}",
+    "sourcename": "Archived cloud call recording storage",
+    "target": "{1EBB45DB-64D8-482e-A0C8-70C4537490FB}",
+    "targetname": "Call Recording",
+    "value": 1
+  },
+  {
+    "source": "{7A7121C5-0314-403a-92B4-878BCE3D8C8F}",
+    "sourcename": "Basic Automated Outbound and Campaign Management",
+    "target": "{0B4D8859-DC74-48b4-ABF7-F67BAEEB0C49}",
+    "targetname": "Campaign Management",
+    "value": 1
+  },
+  {
+    "source": "{D8E9F08E-F3DD-4857-9A10-DC752325FE0E}",
+    "sourcename": "Basic Email and Web Chat\nMultimedia Agent Desktop App\nReal Time and Historical reporting\n",
+    "target": "{4261B7BA-B232-48a1-8F65-697C08A69EE9}",
+    "targetname": "Web Chat",
+    "value": 1
+  },
+  {
+    "source": "{23599E97-6711-4abe-B4D8-6FF6EDE98D7D}",
+    "sourcename": "Basic Email and Web Chat Routing",
+    "target": "{76883064-A5E5-4521-9A1D-E5590DD6D344}",
+    "targetname": "Email",
+    "value": 1
+  },
+  {
+    "source": "{23599E97-6711-4abe-B4D8-6FF6EDE98D7D}",
+    "sourcename": "Basic Email and Web Chat Routing",
+    "target": "{5B974317-CB5C-472d-BB51-41E88467066D}",
+    "targetname": "Routing",
+    "value": 1
+  },
+  {
+    "source": "{EE873656-A0F1-44fb-BA9E-B8E57CF5B302}",
+    "sourcename": "Basic voice callback",
+    "target": "{99A4F57D-4C3C-4031-B29D-5480C5185B17}",
+    "targetname": "Call Back",
+    "value": 1
+  },
+  {
+    "source": "{9721F04A-6A24-4702-A92B-543D984A9A24}",
+    "sourcename": "Call and Screen Recording",
+    "target": "{1EBB45DB-64D8-482e-A0C8-70C4537490FB}",
+    "targetname": "Call Recording",
+    "value": 1
+  },
+  {
+    "source": "{7428E844-9F3D-4313-9AE1-56EC84B2D492}",
+    "sourcename": "On demand IVR DTMF",
+    "target": "{910CA559-F9A4-4b7f-8ECB-06835C0F875A}",
+    "targetname": "Interactive Voice Response",
+    "value": 1
+  },
+  {
+    "source": "{EDFBD486-ED3A-4af9-975F-41915EDE4976}",
+    "sourcename": "On demand Speech Analytics",
+    "target": "{1E1B2A1A-92B9-44b9-85FB-437D1986D10B}",
+    "targetname": "Analytics",
+    "value": 1
+  },
+  {
+    "source": "{354E7268-133B-4c67-AAD7-1FBAF3FFDC90}",
+    "sourcename": "On demand Speech Survey no integration",
+    "target": "{658C2751-DC20-4c93-B7B8-CB7B30C5135A}",
+    "targetname": "Survey",
+    "value": 1
+  },
+  {
+    "source": "{CDB64672-383D-4256-AD8C-969FA81BF068}",
+    "sourcename": "Remote agent home outside contact centre voice over Broadband",
+    "target": "{F7D566A1-77F3-4199-9537-AC080D01B4C0}",
+    "targetname": "Remote connectiviity",
+    "value": 1
+  },
+  {
+    "source": "{B81C985A-9CA8-44be-94C2-426F34E4722F}",
+    "sourcename": "Remote agent home outside contact centre voice over PSTN",
+    "target": "{F7D566A1-77F3-4199-9537-AC080D01B4C0}",
+    "targetname": "Remote connectiviity",
+    "value": 1
+  },
+  {
+    "source": "{F8ECD9D0-4ED8-4005-8ECE-E2C93FFB342E}",
+    "sourcename": "SIP integration to alternative systems",
+    "target": "{6EA02912-6BBC-424c-ACD7-54D9AF7B0BF8}",
+    "targetname": "SIP third party",
+    "value": 1
+  },
+  {
+    "source": "{851A6479-7AC7-4fb8-8DC4-4753A0A01F6E}",
+    "sourcename": "Scheduled callback online request",
+    "target": "{99A4F57D-4C3C-4031-B29D-5480C5185B17}",
+    "targetname": "Call Back",
+    "value": 1
+  },
+  {
+    "source": "{D4171370-6AFC-46e7-B9EC-E3BE68A04847}",
+    "sourcename": "Scheduled callback voice request",
+    "target": "{99A4F57D-4C3C-4031-B29D-5480C5185B17}",
+    "targetname": "Call Back",
+    "value": 1
+  },
+  {
+    "source": "{ACEE5530-2011-496c-9ACF-7E6003B24422}",
+    "sourcename": "Self Service and Personalised Outbound Campaigns",
+    "target": "{0B4D8859-DC74-48b4-ABF7-F67BAEEB0C49}",
+    "targetname": "Campaign Management",
+    "value": 1
+  },
+  {
+    "source": "{A1E29E8E-F37F-49ab-A497-6D08F5553051}",
+    "sourcename": "Social Media",
+    "target": "{1E65FDCB-B25A-4d6a-8F86-4A14D7C90951}",
+    "targetname": "Social Media",
+    "value": 1
+  },
+  {
+    "source": "{C4A4CD5C-91DE-4883-AB86-49833BB0F17B}",
+    "sourcename": "Speech Recognition Capability",
+    "target": "{92AFCA67-04B0-4b15-B40C-7D1FC347073B}",
+    "targetname": "Speech Recognition Capability",
+    "value": 1
+  },
+  {
+    "source": "{E0D2FD45-15B6-44ab-B7C3-E0A29F8F8948}",
+    "sourcename": "Speech Recognition Capability",
+    "target": "{92AFCA67-04B0-4b15-B40C-7D1FC347073B}",
+    "targetname": "Speech Recognition Capability",
+    "value": 1
+  },
+  {
+    "source": "{A9E58AC2-CF3C-46b3-9633-F3876A688412}",
+    "sourcename": "Stand alone Interactive Voice Response IVR DTMF Basic Service",
+    "target": "{910CA559-F9A4-4b7f-8ECB-06835C0F875A}",
+    "targetname": "Interactive Voice Response",
+    "value": 1
+  },
+  {
+    "source": "{4305BFA8-037F-4d18-85C8-FA7A2095765C}",
+    "sourcename": "Standalone interactive voice response IVR  DTMF",
+    "target": "{910CA559-F9A4-4b7f-8ECB-06835C0F875A}",
+    "targetname": "Interactive Voice Response",
+    "value": 1
+  },
+  {
+    "source": "{9F0FCB17-8E54-42ea-B097-37FA2C5ADBB3}",
+    "sourcename": "Voice Biometric Capability",
+    "target": "{A72FA259-FB39-409b-AE27-8C6443850D63}",
+    "targetname": "Biometric Capability",
+    "value": 1
+  },
+  {
+    "source": "{8FC07F3F-C569-40a6-BDD5-5E181EE9E408}",
+    "sourcename": "Workforce management all media channels",
+    "target": "{E471FA75-5B60-4301-BF8F-6804BECF2CF3}",
+    "targetname": "Work force management",
+    "value": 1
+  },
+  {
+    "source": "{F7825772-43AE-4704-AC1A-0D873618D430}",
+    "sourcename": "Legacy Gateway",
+    "target": "{04C8B0C5-593B-4366-BA13-F071970D538D}",
+    "targetname": "Legacy Gateway Interconnect",
+    "value": 1
+  },
+  {
+    "source": "{8CB116E9-3679-4e5f-AAE9-7ADBF3853054}",
+    "sourcename": "TAAS 2 PD?",
+    "target": "{82075321-355F-46d9-97A8-586AC16B1D4D}",
+    "targetname": "Managed Public Key Infrastructure",
+    "value": 1
+  },
+  {
+    "source": "{8CB116E9-3679-4e5f-AAE9-7ADBF3853054}",
+    "sourcename": "TAAS 2 PD?",
+    "target": "{E6509D6C-B00B-49fa-9FC7-202885C38C8F}",
+    "targetname": "Managed WiFi",
+    "value": 1
+  },
+  {
+    "source": "{8CB116E9-3679-4e5f-AAE9-7ADBF3853054}",
+    "sourcename": "TAAS 2 PD?",
+    "target": "{FC2A987D-65CE-420b-8F75-DFD56F7645BD}",
+    "targetname": "Authentication",
+    "value": 1
+  },
+  {
+    "source": "{8CB116E9-3679-4e5f-AAE9-7ADBF3853054}",
+    "sourcename": "TAAS 2 PD?",
+    "target": "{14979531-7BE9-470b-A725-C001DAE5C6B0}",
+    "targetname": "Self Service Access Control",
+    "value": 1
+  },
+  {
+    "source": "{8CB116E9-3679-4e5f-AAE9-7ADBF3853054}",
+    "sourcename": "TAAS 2 PD?",
+    "target": "{9F04C680-3B4F-4fc8-8075-19023892E28C}",
+    "targetname": "Managed Mobile",
+    "value": 1
+  },
+  {
+    "source": "{8CB116E9-3679-4e5f-AAE9-7ADBF3853054}",
+    "sourcename": "TAAS 2 PD?",
+    "target": "{F7D566A1-77F3-4199-9537-AC080D01B4C0}",
+    "targetname": "Remote connectiviity",
+    "value": 1
+  },
+  {
+    "source": "{8CB116E9-3679-4e5f-AAE9-7ADBF3853054}",
+    "sourcename": "TAAS 2 PD?",
+    "target": "{59F49E48-5890-49a5-A9B9-046A1E2724C3}",
+    "targetname": "Fixed Access Connectivity",
+    "value": 1
+  },
+  {
+    "source": "{8CB116E9-3679-4e5f-AAE9-7ADBF3853054}",
+    "sourcename": "TAAS 2 PD?",
+    "target": "{7DD6D90F-6732-4709-88A3-BCAD6E375ACA}",
+    "targetname": "Managed LAN",
+    "value": 1
+  },
+  {
+    "source": "{0DB0DCF9-0830-427d-8626-0189A313DD81}",
+    "sourcename": "Toll Free and Toll Freedom",
+    "target": "{BF49AD93-7332-460d-9D6D-24936469649C}",
+    "targetname": "Toll Free",
+    "value": 1
+  },
+  {
+    "source": "{8B279A30-2FCA-499a-8CF4-6A431D83B06F}",
+    "sourcename": "Additional LAN Ports",
+    "target": "{7EFF582D-2756-4552-8534-23437C897CF2}",
+    "targetname": "LAN Port Configuration",
+    "value": 1
+  },
+  {
+    "source": "{76FF3B8A-9E19-4609-B9FB-0F9979E7DA5C}",
+    "sourcename": "Analogue Line",
+    "target": "{07F88E49-098E-4a72-8528-E17B84770809}",
+    "targetname": "PSTN Calling Service",
+    "value": 1
+  },
+  {
+    "source": "{5FDC5166-85C4-4b59-BE90-F127722DA257}",
+    "sourcename": "Community Connect",
+    "target": "{59F49E48-5890-49a5-A9B9-046A1E2724C3}",
+    "targetname": "Fixed Access Connectivity",
+    "value": 1
+  },
+  {
+    "source": "{E44AC2D1-7903-4b24-A1AE-8953353F674C}",
+    "sourcename": "Devices",
+    "target": "{55B591AF-4AA9-49f3-AA51-5A830D0FC8D2}",
+    "targetname": "Equipment as a service",
+    "value": 1
+  },
+  {
+    "source": "{5D042CDD-DCB1-4844-B208-2B2FFE7EB4A9}",
+    "sourcename": "ESN Enterprise Priority",
+    "target": "{59F49E48-5890-49a5-A9B9-046A1E2724C3}",
+    "targetname": "Fixed Access Connectivity",
+    "value": 1
+  },
+  {
+    "source": "{2F72B83D-3C40-493f-972D-513C4CBB525C}",
+    "sourcename": "ESN Hazmat",
+    "target": "{59F49E48-5890-49a5-A9B9-046A1E2724C3}",
+    "targetname": "Fixed Access Connectivity",
+    "value": 1
+  },
+  {
+    "source": "{8D7CAA3D-8505-4edf-AD38-ECBD97230647}",
+    "sourcename": "ESN Mission Critical Connectivity",
+    "target": "{59F49E48-5890-49a5-A9B9-046A1E2724C3}",
+    "targetname": "Fixed Access Connectivity",
+    "value": 1
+  },
+  {
+    "source": "{5DBD8582-AE6B-4287-914F-1F954A9D0D81}",
+    "sourcename": "ESN Radio IP Network",
+    "target": "{59F49E48-5890-49a5-A9B9-046A1E2724C3}",
+    "targetname": "Fixed Access Connectivity",
+    "value": 1
+  },
+  {
+    "source": "{D684FD95-8681-4727-9558-758FCB66D544}",
+    "sourcename": "GNET Connect Lite",
+    "target": "{59F49E48-5890-49a5-A9B9-046A1E2724C3}",
+    "targetname": "Fixed Access Connectivity",
+    "value": 1
+  },
+  {
+    "source": "{BECA033A-61D5-4492-BC6C-CF02B3C9BAD6}",
+    "sourcename": "GNET Data Centre Interconnect",
+    "target": "{59F49E48-5890-49a5-A9B9-046A1E2724C3}",
+    "targetname": "Fixed Access Connectivity",
+    "value": 1
+  },
+  {
+    "source": "{BECA033A-61D5-4492-BC6C-CF02B3C9BAD6}",
+    "sourcename": "GNET Data Centre Interconnect",
+    "target": "{27DF6C8A-D97E-4724-A902-F4C94A239308}",
+    "targetname": "Managed WAN",
+    "value": 1
+  },
+  {
+    "source": "{7F43556E-3E9D-4cf2-A0CC-596EEB13702D}",
+    "sourcename": "GNET Data Centre Switching",
+    "target": "{59F49E48-5890-49a5-A9B9-046A1E2724C3}",
+    "targetname": "Fixed Access Connectivity",
+    "value": 1
+  },
+  {
+    "source": "{E02BFFB5-4F3E-41db-B8C0-B42E88B53836}",
+    "sourcename": "GNET Microwave",
+    "target": "{59F49E48-5890-49a5-A9B9-046A1E2724C3}",
+    "targetname": "Fixed Access Connectivity",
+    "value": 1
+  },
+  {
+    "source": "{F6047B75-8FCB-42ba-8E6A-1740BB806D6D}",
+    "sourcename": "GNET Mobile Data",
+    "target": "{D9421060-DFA5-4675-B7F9-21A0CFDB3109}",
+    "targetname": "Mobile Access Connectivity",
+    "value": 1
+  },
+  {
+    "source": "{D0C35A88-C200-436a-89CB-DC8F2FB255D0}",
+    "sourcename": "GNET Satellite",
+    "target": "{59F49E48-5890-49a5-A9B9-046A1E2724C3}",
+    "targetname": "Fixed Access Connectivity",
+    "value": 1
+  },
+  {
+    "source": "{ABA06F11-0191-438c-9292-741BC9B42F19}",
+    "sourcename": "GNET Service Connect",
+    "target": "{CF4CAD09-E060-474d-8B00-B703F9950A3B}",
+    "targetname": "WAN Core",
+    "value": 1
+  },
+  {
+    "source": "{ABA06F11-0191-438c-9292-741BC9B42F19}",
+    "sourcename": "GNET Service Connect",
+    "target": "{A77C29D4-3CA3-47e8-85F0-1695511F3DA6}",
+    "targetname": "Virtual Encryption Domain",
+    "value": 1
+  },
+  {
+    "source": "{BDAC4E4B-EEBE-4d1f-8FAC-B3F74F598507}",
+    "sourcename": "Gnet Legacy Connectivity",
+    "target": "{CF4CAD09-E060-474d-8B00-B703F9950A3B}",
+    "targetname": "WAN Core",
+    "value": 1
+  },
+  {
+    "source": "{BDAC4E4B-EEBE-4d1f-8FAC-B3F74F598507}",
+    "sourcename": "Gnet Legacy Connectivity",
+    "target": "{A77C29D4-3CA3-47e8-85F0-1695511F3DA6}",
+    "targetname": "Virtual Encryption Domain",
+    "value": 1
+  },
+  {
+    "source": "{BDCFC053-1578-4a9d-B840-7C28A82852F5}",
+    "sourcename": "High Availability",
+    "target": "{59F49E48-5890-49a5-A9B9-046A1E2724C3}",
+    "targetname": "Fixed Access Connectivity",
+    "value": 1
+  },
+  {
+    "source": "{0324C7D3-7E76-4607-A915-6B7CFE0D27B9}",
+    "sourcename": "ISDN/PRA",
+    "target": "{6593F80D-89A2-477a-8CC9-5F801B7152F4}",
+    "targetname": "ISDN Access",
+    "value": 1
+  },
+  {
+    "source": "{05D36D4C-24EC-4043-BBFA-1B080F958276}",
+    "sourcename": "International Roaming",
+    "target": "{AD56CCBD-15E4-4c1e-90D2-CFB4AAF6F581}",
+    "targetname": "Mobile Service",
+    "value": 1
+  },
+  {
+    "source": "{53D2F574-2848-4d7f-8EF7-31E466DE54C4}",
+    "sourcename": "Machine to Machine (M2M)",
+    "target": "{D9421060-DFA5-4675-B7F9-21A0CFDB3109}",
+    "targetname": "Mobile Access Connectivity",
+    "value": 1
+  },
+  {
+    "source": "{24D25719-4EE3-4bf3-9194-6260C7E42018}",
+    "sourcename": "Call recording of corporate users non contact centre",
+    "target": "{1EBB45DB-64D8-482e-A0C8-70C4537490FB}",
+    "targetname": "Call Recording",
+    "value": 1
+  },
+  {
+    "source": "{83060426-87F1-4896-9BA7-1441B9334A3E}",
+    "sourcename": "Call recording transferred calls users without call recording capability",
+    "target": "{1EBB45DB-64D8-482e-A0C8-70C4537490FB}",
+    "targetname": "Call Recording",
+    "value": 1
+  },
+  {
+    "source": "{83F04319-3BCC-4cc7-8F01-3D81E15F0419}",
+    "sourcename": "Channel Analytics Desktop Analytics",
+    "target": "{1E1B2A1A-92B9-44b9-85FB-437D1986D10B}",
+    "targetname": "Analytics",
+    "value": 1
+  },
+  {
+    "source": "{761A6577-D945-4839-B2E0-FF9E0A871C26}",
+    "sourcename": "Channel Analytics Multi media Channel Analytics",
+    "target": "{1E1B2A1A-92B9-44b9-85FB-437D1986D10B}",
+    "targetname": "Analytics",
+    "value": 1
+  },
+  {
+    "source": "{0F7BF363-8386-4350-B049-42C12AB2E4CD}",
+    "sourcename": "Channel Analytics Speech Analytics",
+    "target": "{1E1B2A1A-92B9-44b9-85FB-437D1986D10B}",
+    "targetname": "Analytics",
+    "value": 1
+  },
+  {
+    "source": "{CA0353A5-8FB4-4c86-89B6-FCB79DFEFB93}",
+    "sourcename": "Dedicated Tenant Call and Screen Recording",
+    "target": "{1EBB45DB-64D8-482e-A0C8-70C4537490FB}",
+    "targetname": "Call Recording",
+    "value": 1
+  },
+  {
+    "source": "{7604A946-92FC-4929-882F-6D49CFE71284}",
+    "sourcename": "Efax Service and Routing",
+    "target": "{18D00EE4-D8B1-4098-A1F2-80C5967D0F55}",
+    "targetname": "Efax Service",
+    "value": 1
+  },
+  {
+    "source": "{A15BA19E-65B2-46f6-A213-70F08AFE79B4}",
+    "sourcename": "Efax Service and Routing",
+    "target": "{18D00EE4-D8B1-4098-A1F2-80C5967D0F55}",
+    "targetname": "Efax Service",
+    "value": 1
+  },
+  {
+    "source": "{A15BA19E-65B2-46f6-A213-70F08AFE79B4}",
+    "sourcename": "Efax Service and Routing",
+    "target": "{5B974317-CB5C-472d-BB51-41E88467066D}",
+    "targetname": "Routing",
+    "value": 1
+  },
+  {
+    "source": "{988DD36A-329D-433c-AC6C-6B4F0684B8A4}",
+    "sourcename": "Free Speech Biometric Capability",
+    "target": "{A72FA259-FB39-409b-AE27-8C6443850D63}",
+    "targetname": "Biometric Capability",
+    "value": 1
+  },
+  {
+    "source": "{4444EE7D-43C7-41d0-AAC6-39F4C8DD7DA7}",
+    "sourcename": "Inbound Video",
+    "target": "{6FE3E0BD-5B3F-4f7a-989A-D97F5C60F4B9}",
+    "targetname": "Video",
+    "value": 1
+  },
+  {
+    "source": "{5068E2F7-31D4-476f-AD0B-8D6512835802}",
+    "sourcename": "Inbound Voice Routing\nMultimedia Agent Desktop App, Real Time and Historical reporting",
+    "target": "{5B974317-CB5C-472d-BB51-41E88467066D}",
+    "targetname": "Routing",
+    "value": 1
+  },
+  {
+    "source": "{38C2184B-8701-4e05-BA88-5927E330BE54}",
+    "sourcename": "Integrated knowledge base",
+    "target": "{25F6DF2E-F9FD-4657-AB03-8BF8D5A90B75}",
+    "targetname": "Integrated knowledge base",
+    "value": 1
+  },
+  {
+    "source": "{AD9C1864-4206-4929-8193-03EF874F8BBE}",
+    "sourcename": "UC Fixed Collaboration User",
+    "target": "{D89F8DCE-9B42-42c5-B17F-3A9933CAEF41}",
+    "targetname": "Media Conferencing",
+    "value": 1
+  },
+  {
+    "source": "{AD9C1864-4206-4929-8193-03EF874F8BBE}",
+    "sourcename": "UC Fixed Collaboration User",
+    "target": "{C2954BD7-6D63-475f-8412-5F47DE253164}",
+    "targetname": "Directory Service",
+    "value": 1
+  },
+  {
+    "source": "{AD9C1864-4206-4929-8193-03EF874F8BBE}",
+    "sourcename": "UC Fixed Collaboration User",
+    "target": "{C104EA20-0BBB-4247-9367-3B75C6A13766}",
+    "targetname": "Telephony",
+    "value": 1
+  },
+  {
+    "source": "{AD9C1864-4206-4929-8193-03EF874F8BBE}",
+    "sourcename": "UC Fixed Collaboration User",
+    "target": "{1C859EF8-A781-4a2b-8EFC-356755FE3110}",
+    "targetname": "Instant Messaging",
+    "value": 1
+  },
+  {
+    "source": "{AD9C1864-4206-4929-8193-03EF874F8BBE}",
+    "sourcename": "UC Fixed Collaboration User",
+    "target": "{D140E603-2292-460c-A3AD-28C618B3CA2A}",
+    "targetname": "Presence",
+    "value": 1
+  },
+  {
+    "source": "{AD9C1864-4206-4929-8193-03EF874F8BBE}",
+    "sourcename": "UC Fixed Collaboration User",
+    "target": "{436F66D2-17F7-4b79-8FDC-5F27323299DC}",
+    "targetname": "Sharing",
+    "value": 1
+  },
+  {
+    "source": "{0C4D0630-44CF-43a4-BB7B-0821370453CB}",
+    "sourcename": "Audio Conferencing",
+    "target": "{D89F8DCE-9B42-42c5-B17F-3A9933CAEF41}",
+    "targetname": "Media Conferencing",
+    "value": 1
+  },
+  {
+    "source": "{1DF5A081-503D-455a-9008-AC5337CADCCC}",
+    "sourcename": "Converged Collaboration User",
+    "target": "{1C859EF8-A781-4a2b-8EFC-356755FE3110}",
+    "targetname": "Instant Messaging",
+    "value": 1
+  },
+  {
+    "source": "{1DF5A081-503D-455a-9008-AC5337CADCCC}",
+    "sourcename": "Converged Collaboration User",
+    "target": "{C2954BD7-6D63-475f-8412-5F47DE253164}",
+    "targetname": "Directory Service",
+    "value": 1
+  },
+  {
+    "source": "{1DF5A081-503D-455a-9008-AC5337CADCCC}",
+    "sourcename": "Converged Collaboration User",
+    "target": "{6409CF6F-9D56-458d-92EB-EC1A2FA1E3AE}",
+    "targetname": "VoiceMail",
+    "value": 1
+  },
+  {
+    "source": "{1DF5A081-503D-455a-9008-AC5337CADCCC}",
+    "sourcename": "Converged Collaboration User",
+    "target": "{D140E603-2292-460c-A3AD-28C618B3CA2A}",
+    "targetname": "Presence",
+    "value": 1
+  },
+  {
+    "source": "{1DF5A081-503D-455a-9008-AC5337CADCCC}",
+    "sourcename": "Converged Collaboration User",
+    "target": "{436F66D2-17F7-4b79-8FDC-5F27323299DC}",
+    "targetname": "Sharing",
+    "value": 1
+  },
+  {
+    "source": "{1DF5A081-503D-455a-9008-AC5337CADCCC}",
+    "sourcename": "Converged Collaboration User",
+    "target": "{C104EA20-0BBB-4247-9367-3B75C6A13766}",
+    "targetname": "Telephony",
+    "value": 1
+  },
+  {
+    "source": "{1DF5A081-503D-455a-9008-AC5337CADCCC}",
+    "sourcename": "Converged Collaboration User",
+    "target": "{D89F8DCE-9B42-42c5-B17F-3A9933CAEF41}",
+    "targetname": "Media Conferencing",
+    "value": 1
+  },
+  {
+    "source": "{AD184A9B-1665-4c97-A7CA-1186F63EFF8B}",
+    "sourcename": "Integrated Messaging and Presence",
+    "target": "{1C859EF8-A781-4a2b-8EFC-356755FE3110}",
+    "targetname": "Instant Messaging",
+    "value": 1
+  },
+  {
+    "source": "{68F44EB2-F23A-4bc9-A9D8-94EFCCF90D47}",
+    "sourcename": "SMS Broadcast",
+    "target": "{76460DE4-5689-4f72-B722-C897B3B077E0}",
+    "targetname": "SMS",
+    "value": 1
+  },
+  {
+    "source": "{5FCD3922-76CF-44b7-BD22-A3934DC475DC}",
+    "sourcename": "SMS Gateway",
+    "target": "{76460DE4-5689-4f72-B722-C897B3B077E0}",
+    "targetname": "SMS",
+    "value": 1
+  },
+  {
+    "source": "{15379DA2-6072-4fe0-96E5-FE7C55AB8B0A}",
+    "sourcename": "UC Base Product",
+    "target": "{C2954BD7-6D63-475f-8412-5F47DE253164}",
+    "targetname": "Directory Service",
+    "value": 1
+  },
+  {
+    "source": "{15379DA2-6072-4fe0-96E5-FE7C55AB8B0A}",
+    "sourcename": "UC Base Product",
+    "target": "{D140E603-2292-460c-A3AD-28C618B3CA2A}",
+    "targetname": "Presence",
+    "value": 1
+  },
+  {
+    "source": "{15379DA2-6072-4fe0-96E5-FE7C55AB8B0A}",
+    "sourcename": "UC Base Product",
+    "target": "{436F66D2-17F7-4b79-8FDC-5F27323299DC}",
+    "targetname": "Sharing",
+    "value": 1
+  },
+  {
+    "source": "{15379DA2-6072-4fe0-96E5-FE7C55AB8B0A}",
+    "sourcename": "UC Base Product",
+    "target": "{1C859EF8-A781-4a2b-8EFC-356755FE3110}",
+    "targetname": "Instant Messaging",
+    "value": 1
+  },
+  {
+    "source": "{15379DA2-6072-4fe0-96E5-FE7C55AB8B0A}",
+    "sourcename": "UC Base Product",
+    "target": "{C104EA20-0BBB-4247-9367-3B75C6A13766}",
+    "targetname": "Telephony",
+    "value": 1
+  },
+  {
+    "source": "{FE530926-53CC-4ca3-B7B4-3B89E85B62A1}",
+    "sourcename": "Unlimited Calling",
+    "target": "{C104EA20-0BBB-4247-9367-3B75C6A13766}",
+    "targetname": "Telephony",
+    "value": 1
+  }
+]
